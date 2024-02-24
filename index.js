@@ -22,7 +22,7 @@ const updatedFormattedDate = formattedDate.slice(0, -4) + lastTwoDigitsOfYear; /
 indexDate.innerText = updatedFormattedDate;
 
 async function fetchData() {
-  let response = await fetch("http://localhost:3000/students");
+  let response = await fetch("https://cka-backend.onrender.com/students");
   console.log(response);
   let data = await response.json();
   console.log(data);

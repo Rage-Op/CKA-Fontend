@@ -3,6 +3,32 @@ const sideLinks = document.querySelectorAll(
 );
 
 console.log("hello from js");
+window.addEventListener("load", () => {
+  fetchData();
+});
+
+const indexDate = document.querySelector("#index-date");
+const indexStudents = document.querySelector("#index-students");
+const date = new Date();
+const options = {
+  day: "numeric",
+  month: "numeric",
+  year: "numeric",
+};
+
+const formattedDate = date.toLocaleDateString("en-US", options);
+const lastTwoDigitsOfYear = formattedDate.slice(-2); // Extract last two digits of the year
+const updatedFormattedDate = formattedDate.slice(0, -4) + lastTwoDigitsOfYear; // Replace last 4 digits with last two digits of the year
+indexDate.innerText = updatedFormattedDate;
+
+async function fetchData() {
+  let response = await fetch("http://localhost:3000/students");
+  console.log(response);
+  let data = await response.json();
+  console.log(data);
+  let studentCount = data.length;
+  indexStudents.innerText = studentCount;
+}
 
 sideLinks.forEach((item) => {
   const li = item.parentElement;
@@ -27,19 +53,6 @@ const searchBtn = document.querySelector(
 const searchBtnIcon = document.querySelector(
   ".content nav form .form-input button .bx"
 );
-const searchForm = document.querySelector(".content nav form");
-
-searchBtn.addEventListener("click", function (e) {
-  if (window.innerWidth < 576) {
-    e.preventDefault;
-    searchForm.classList.toggle("show");
-    if (searchForm.classList.contains("show")) {
-      searchBtnIcon.classList.replace("bx-search", "bx-x");
-    } else {
-      searchBtnIcon.classList.replace("bx-x", "bx-search");
-    }
-  }
-});
 
 window.addEventListener("resize", () => {
   if (window.innerWidth < 768) {

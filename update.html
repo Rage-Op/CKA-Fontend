@@ -57,19 +57,11 @@
     <div class="content">
       <!-- Navbar -->
       <nav>
-        <i class="bx bx-menu"></i>
-        <form action="#">
-          <div class="form-input">
-            <input type="search" placeholder="Search..." />
-            <button class="search-btn" type="submit">
-              <i class="bx bx-search"></i>
-            </button>
-          </div>
-        </form>
+        <i class="bx bx-menu" id="nav-dash"></i>
         <input type="checkbox" id="theme-toggle" hidden />
         <label for="theme-toggle" class="theme-toggle"></label>
         <a href="#" class="profile">
-          <img src="images/logo.png" />
+          <img src="./content/logo.jpg" />
         </a>
       </nav>
 
@@ -78,135 +70,169 @@
       <main>
         <div class="header">
           <div class="left">
-            <h1>Search</h1>
+            <h1>Update</h1>
             <ul class="breadcrumb">
               <li><a href="#"> CKA </a></li>
               /
-              <li><a href="#" class="active">Search</a></li>
+              <li><a href="#" class="active">Update</a></li>
             </ul>
           </div>
-          <a href="#" class="report">
-            <i class="bx bx-cloud-download"></i>
-            <span>Download CSV</span>
-          </a>
         </div>
 
-        <!-- Insights -->
-        <ul class="insights">
-          <li>
-            <i class="bx bx-calendar-check"></i>
-            <span class="info">
-              <h3>1,074</h3>
-              <p>Date</p>
-            </span>
-          </li>
-          <li>
-            <i class="bx bx-show-alt"></i>
-            <span class="info">
-              <h3>3,944</h3>
-              <p>Admin Users</p>
-            </span>
-          </li>
-          <li>
-            <i class="bx bx-line-chart"></i>
-            <span class="info">
-              <h3>14,721</h3>
-              <p>Students</p>
-            </span>
-          </li>
-          <li>
-            <i class="bx bx-dollar-circle"></i>
-            <span class="info">
-              <h3>$6,742</h3>
-              <p>Due Fees</p>
-            </span>
-          </li>
-        </ul>
-        <!-- End of Insights -->
-
+        <!-- update div start -->
         <div class="bottom-data">
-          <div class="orders">
+          <div class="orders" style="height: 100%">
             <div class="header">
-              <i class="bx bx-receipt"></i>
-              <h3>Recently Admitted</h3>
-              <i class="bx bx-filter"></i>
-              <i class="bx bx-search"></i>
+              <i class="bx bx-duplicate"></i>
+              <h3>Update Student</h3>
+              <i class="bx bx-filter" style="padding-right: 10px"></i>
             </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Students</th>
-                  <th>Admit Date</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <img src="images/profile-1.jpg" />
-                    <p>Pravin Maurya</p>
-                  </td>
-                  <td>14-08-2023</td>
-                  <td><span class="status completed">Completed</span></td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="images/profile-1.jpg" />
-                    <p>Pratik Maurya</p>
-                  </td>
-                  <td>14-08-2023</td>
-                  <td><span class="status pending">Pending</span></td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="images/profile-1.jpg" />
-                    <p>Pradip Maurya</p>
-                  </td>
-                  <td>14-08-2023</td>
-                  <td><span class="status process">Processing</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- Reminders -->
-          <div class="reminders">
-            <div class="header">
-              <i class="bx bx-note"></i>
-              <h3>Remiders</h3>
-              <i class="bx bx-filter"></i>
-              <i class="bx bx-plus"></i>
+            <div class="searchStudent">
+              <form id="search-student-form">
+                <div id="formsearch">
+                  <input type="search" placeholder="Search...(Student ID)" />
+                  <button class="search-btn" type="submit">
+                    <i class="bx bx-search"></i>
+                  </button>
+                </div>
+              </form>
             </div>
-            <ul class="task-list">
-              <li class="completed">
-                <div class="task-title">
-                  <i class="bx bx-check-circle"></i>
-                  <p>Start Our Meeting</p>
+            <div class="update-student-photo">
+              <div class="update-photo"></div>
+            </div>
+            <form action="">
+              <div class="search-result">
+                <div
+                  class="result-right-data"
+                  style="background-color: var(--grey)"
+                >
+                  <div class="add-left">
+                    <div class="inputGroup">
+                      <input
+                        type="text"
+                        id="update-name"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">Name</label>
+                    </div>
+                    <div class="inputGroup">
+                      <input
+                        type="text"
+                        id="update-fname"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">Father's Name</label>
+                    </div>
+                    <div class="inputGroup">
+                      <input
+                        type="text"
+                        id="update-contact"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">Contact</label>
+                    </div>
+                  </div>
+                  <div class="add-mid">
+                    <div class="inputGroup">
+                      <input
+                        type="text"
+                        id="update-DOB"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">Date of Birth</label>
+                    </div>
+                    <div class="inputGroup">
+                      <input
+                        type="text"
+                        id="update-mname"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">Mother's Name</label>
+                    </div>
+                    <div class="inputGroup">
+                      <input
+                        type="text"
+                        id="update-address"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">Address</label>
+                    </div>
+                  </div>
+                  <div class="add-right">
+                    <div class="transport">
+                      <label for="add-transport">Transport:</label>
+                      <input
+                        type="checkbox"
+                        id="update-transport"
+                        class="ui-checkbox"
+                      />
+                    </div>
+                    <div class="diet">
+                      <label for="add-diet">Diet:</label>
+                      <input
+                        type="checkbox"
+                        id="update-diet"
+                        class="ui-checkbox"
+                      />
+                    </div>
+                    <div class="class">
+                      <label for="add-class">Class:</label>
+                      <select name="class" id="add-class">
+                        <option value="P.G.">P.G.</option>
+                        <option value="K.G.">K.G.</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
-                <i class="bx bx-dots-vertical-rounded"></i>
-              </li>
-              <li class="completed">
-                <div class="task-title">
-                  <i class="bx bx-check-circle"></i>
-                  <p>Analyse Our Site</p>
+              </div>
+              <div class="result-bottom">
+                <div class="add-bottom-left">
+                  <li>
+                    <i class="bx bx-hash"></i>
+                    <span class="info">
+                      <h3 id="add-studentId">...</h3>
+                      <p>Student Id</p>
+                    </span>
+                  </li>
                 </div>
-                <i class="bx bx-dots-vertical-rounded"></i>
-              </li>
-              <li class="not-completed">
-                <div class="task-title">
-                  <i class="bx bx-x-circle"></i>
-                  <p>Play Footbal</p>
+                <div class="add-bottom-mid">
+                  <li>
+                    <i class="bx bx-calendar-check"></i>
+                    <span class="info">
+                      <h3 id="add-admitdate">...</h3>
+                      <p>Admit Date</p>
+                    </span>
+                  </li>
                 </div>
-                <i class="bx bx-dots-vertical-rounded"></i>
-              </li>
-            </ul>
+                <div class="add-bottom-mid2">
+                  <button type="submit" id="admit-button">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  </button>
+                </div>
+                <div class="add-bottom-right">
+                  <button id="cancel-button">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cancel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
-
-          <!-- End of Reminders-->
         </div>
+        <!-- update div end -->
       </main>
     </div>
 
-    <script src="index.js"></script>
+    <script src="update.js"></script>
   </body>
 </html>

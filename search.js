@@ -1,7 +1,6 @@
-const sideLinks = document.querySelectorAll(
-  ".sidebar .side-menu li a:not(.logout)"
-);
-
+// MAIN LOGIC
+// MAIN LOGIC
+// MAIN LOGIC
 const searchFormButton = document.querySelector("#formsearch button");
 const searchFormInput = document.querySelector("#formsearch input");
 let resultName = document.querySelector("#result-name");
@@ -45,6 +44,7 @@ async function fetchStudent() {
     resultCredit.textContent = data.fees.credit;
     resultDebit.textContent = data.fees.debit;
     resultDue.textContent = data.fees.debit - data.fees.credit;
+    searchFormInput.value = "";
     if (!data.photo) {
       console.log("no photo");
       photoUrl.style.backgroundImage = 'url("./content/user-icon.jpg")';
@@ -59,13 +59,21 @@ async function fetchStudent() {
     resultMname.textContent = "..........";
     resultContact.textContent = "..........";
     resultAddress.textContent = "..........";
-    resultCredit.textContent = 100;
-    resultDebit.textContent = 100;
+    resultCredit.textContent = 0;
+    resultDebit.textContent = 0;
     photoUrl.style.backgroundImage = 'url("./content/user-icon.jpg")';
+    searchFormInput.value = "";
 
     // resultDue.textContent = data.fees.debit - data.fees.credit;
   }
 }
+// MAIN LOGIC
+// MAIN LOGIC
+// MAIN LOGIC
+
+const sideLinks = document.querySelectorAll(
+  ".sidebar .side-menu li a:not(.logout)"
+);
 
 sideLinks.forEach((item) => {
   const li = item.parentElement;
@@ -76,32 +84,12 @@ sideLinks.forEach((item) => {
     li.classList.add("active");
   });
 });
-
+// Sidebar
 const menuBar = document.querySelector(".content nav .bx.bx-menu");
 const sideBar = document.querySelector(".sidebar");
 
 menuBar.addEventListener("click", () => {
   sideBar.classList.toggle("close");
-});
-
-const searchBtn = document.querySelector(
-  ".content nav form .form-input button"
-);
-const searchBtnIcon = document.querySelector(
-  ".content nav form .form-input button .bx"
-);
-const searchForm = document.querySelector(".content nav form");
-
-searchBtn.addEventListener("click", function (e) {
-  if (window.innerWidth < 576) {
-    e.preventDefault;
-    searchForm.classList.toggle("show");
-    if (searchForm.classList.contains("show")) {
-      searchBtnIcon.classList.replace("bx-search", "bx-x");
-    } else {
-      searchBtnIcon.classList.replace("bx-x", "bx-search");
-    }
-  }
 });
 
 window.addEventListener("resize", () => {
@@ -110,12 +98,8 @@ window.addEventListener("resize", () => {
   } else {
     sideBar.classList.remove("close");
   }
-  if (window.innerWidth > 576) {
-    searchBtnIcon.classList.replace("bx-x", "bx-search");
-    searchForm.classList.remove("show");
-  }
 });
-
+// Theme
 const toggler = document.getElementById("theme-toggle");
 
 toggler.addEventListener("change", function () {

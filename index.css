@@ -626,6 +626,18 @@ body {
   border: 4px solid black;
 }
 
+#sucess-dialog {
+  background-color: rgba(187, 247, 208, 0.7);
+  height: 100px;
+  width: 250px;
+  border: 1px solid #50c156;
+  border-radius: 12px;
+  padding: 24px;
+  z-index: 10;
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+}
+
 .content nav .notif {
   font-size: 20px;
   position: relative;

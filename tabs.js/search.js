@@ -1,6 +1,8 @@
 // MAIN LOGIC
 // MAIN LOGIC
 // MAIN LOGIC
+let notice = document.querySelector("#sucess-dialog");
+
 const searchFormButton = document.querySelector("#formsearch button");
 const searchFormInput = document.querySelector("#formsearch input");
 let resultName = document.querySelector("#result-name");
@@ -45,6 +47,10 @@ async function fetchStudent() {
     resultDebit.textContent = data.fees.debit;
     resultDue.textContent = data.fees.debit - data.fees.credit;
     searchFormInput.value = "";
+    notice.style.opacity = "100";
+    setTimeout(() => {
+      notice.style.opacity = "0";
+    }, 2000);
     if (!data.photo) {
       console.log("no photo");
       photoUrl.style.backgroundImage = 'url("./content/user-icon.jpg")';
@@ -53,6 +59,14 @@ async function fetchStudent() {
     }
   } catch (error) {
     console.log(error);
+    notice.innerHTML = "<h4>Failed!</h4><p>Student not found</p>";
+    notice.style.backgroundColor = "rgba(254, 205, 211, 0.7)";
+    notice.style.border = "1px solid #D32F2F";
+    notice.style.opacity = "100";
+    setTimeout(() => {
+      notice.style.opacity = "0";
+      noticeToDefault();
+    }, 2000);
     resultName.textContent = "..........";
     resultDOB.textContent = "..........";
     resultFname.textContent = "..........";
@@ -66,6 +80,14 @@ async function fetchStudent() {
 
     // resultDue.textContent = data.fees.debit - data.fees.credit;
   }
+}
+
+function noticeToDefault() {
+  setTimeout(() => {
+    notice.style.backgroundColor = "rgba(187, 247, 208, 0.7)";
+    notice.style.border = "1px solid #50c156";
+    notice.innerHTML = "<h4>Sucess!</h4><p>Student found</p>";
+  }, 300);
 }
 // MAIN LOGIC
 // MAIN LOGIC

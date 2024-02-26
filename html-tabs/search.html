@@ -7,9 +7,9 @@
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="index.css" />
-    <link rel="icon" href="./content/logo.jpg" />
-    <title>CKA-Delete</title>
+    <link rel="stylesheet" href="./../index.css" />
+    <link rel="icon" href="./../content/logo.jpg" />
+    <title>CKA-Search</title>
   </head>
 
   <body>
@@ -21,22 +21,30 @@
       </a>
       <ul class="side-menu">
         <li>
-          <a href="./index.html"><i class="bx bxs-dashboard"></i>Dashboard</a>
+          <a href="./../index.html"
+            ><i class="bx bxs-dashboard"></i>Dashboard</a
+          >
+        </li>
+        <li class="active">
+          <a href="#"><i class="bx bx-search"></i>Search</a>
         </li>
         <li>
-          <a href="./search.html"><i class="bx bx-search"></i>Search</a>
+          <a href="./../html-tabs/add.html"
+            ><i class="bx bx-user-plus"></i>Add</a
+          >
         </li>
         <li>
-          <a href="./add.html"><i class="bx bx-user-plus"></i>Add</a>
-        </li>
-        <li>
-          <a href="./update.html"><i class="bx bx-duplicate"></i>Update</a>
+          <a href="./../html-tabs/update.html"
+            ><i class="bx bx-duplicate"></i>Update</a
+          >
         </li>
         <li>
           <a href="#"><i class="bx bx-group"></i>Fees</a>
         </li>
-        <li class="active">
-          <a href="#"><i class="bx bx-trash"></i>Delete</a>
+        <li>
+          <a href="./../html-tabs/delete.html"
+            ><i class="bx bx-trash"></i>Delete</a
+          >
         </li>
         <li>
           <a href="#"><i class="bx bx-cog"></i>Settings</a>
@@ -61,7 +69,7 @@
         <input type="checkbox" id="theme-toggle" hidden />
         <label for="theme-toggle" class="theme-toggle"></label>
         <a href="#" class="profile">
-          <img src="./content/user-icon.jpg" />
+          <img src="./../content/logo.jpg" />
         </a>
       </nav>
 
@@ -70,15 +78,20 @@
       <main>
         <div class="header">
           <div class="left">
-            <h1 style="color: #d32f2f">Delete</h1>
+            <h1>Search</h1>
             <ul class="breadcrumb">
               <li><a href="#"> CKA </a></li>
               /
-              <li><a href="#" class="active">Delete</a></li>
+              <li><a href="#" class="active">Search</a></li>
             </ul>
           </div>
+          <div id="sucess-dialog">
+            <h4>Sucess!</h4>
+            <p>Student found</p>
+          </div>
         </div>
-        <!-- Start of delete -->
+
+        <!-- Search div start -->
         <div class="bottom-data">
           <div class="orders" style="height: 100%">
             <div class="header">
@@ -147,21 +160,13 @@
                   <p>Due</p>
                 </div>
               </div>
-              <div class="delete-bottom2">
-                <button type="submit" id="admit-button">
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cancel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </button>
-                <button id="cancel-button">
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delete&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </button>
-              </div>
             </div>
           </div>
         </div>
-        <!-- End of Delete-->
+        <!-- Search div end -->
       </main>
     </div>
 
-    <script src="delete.js"></script>
+    <script src="./../tabs.js/search.js"></script>
   </body>
 </html>

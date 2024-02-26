@@ -1,6 +1,8 @@
 // MAIN LOGIC
 // MAIN LOGIC
 // MAIN LOGIC
+let notice = document.querySelector("#sucess-dialog");
+
 const admitButton = document.querySelector("#admit-button");
 const cancelButton = document.querySelector("#cancel-button");
 let addName = document.querySelector("#add-name");
@@ -17,6 +19,48 @@ let addDiet = document.querySelector("#add-diet");
 let addClass = document.querySelector("#add-class");
 let photoUrl = document.querySelector(".photo");
 let nextStudentId;
+
+//
+//
+//
+// To get next student ID.
+getStudentId();
+async function getStudentId() {
+  let getURL = "https://cka-backend.onrender.com/students";
+
+  try {
+    let response = await fetch(getURL);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    let data = await response.json();
+    if (!data[0].studentId) {
+      nextStudentId = 1;
+    } else {
+      nextStudentId = Number(data[0].studentId) + 1;
+    }
+    addStudentId.textContent = nextStudentId;
+    const date = new Date();
+    const options = {
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
+    };
+    const formattedDate = date.toLocaleDateString("en-US", options);
+    const lastTwoDigitsOfYear = formattedDate.slice(-2);
+    const updatedFormattedDate =
+      formattedDate.slice(0, -4) + lastTwoDigitsOfYear;
+    addAdmitDate.textContent = updatedFormattedDate;
+  } catch (error) {
+    console.log(error);
+  }
+}
+//
+//
+//
+//
+//
+
 admitButton.addEventListener("click", (event) => {
   event.preventDefault();
   if (
@@ -123,9 +167,21 @@ async function addStudent(nextStudentId, admitDate) {
     })
     .then((data) => {
       console.log("Response data:", data);
+      notice.style.opacity = "100";
+      setTimeout(() => {
+        notice.style.opacity = "0";
+      }, 2000);
     })
     .catch((error) => {
       console.error("There was a problem with the post operation:", error);
+      notice.innerHTML = "<h4>Failed!</h4><p>Student deletion failed</p>";
+      notice.style.backgroundColor = "rgba(254, 205, 211, 0.7)";
+      notice.style.border = "1px solid #D32F2F";
+      notice.style.opacity = "100";
+      setTimeout(() => {
+        notice.style.opacity = "0";
+        noticeToDefault();
+      }, 2000);
     });
   addName.value = "";
   addDOB.value = "";
@@ -138,6 +194,13 @@ async function addStudent(nextStudentId, admitDate) {
   addClass.value = "P.G.";
   addStudentId.textContent = "...";
   addAdmitDate.textContent = "...";
+}
+function noticeToDefault() {
+  setTimeout(() => {
+    notice.style.backgroundColor = "rgba(187, 247, 208, 0.7)";
+    notice.style.border = "1px solid #50c156";
+    notice.innerHTML = "<h4>Sucess!</h4><p>Student added</p>";
+  }, 300);
 }
 // MAIN LOGIC
 // MAIN LOGIC

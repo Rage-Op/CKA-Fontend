@@ -7,9 +7,9 @@
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="index.css" />
-    <link rel="icon" href="./content/logo.jpg" />
-    <title>CKA-Add</title>
+    <link rel="stylesheet" href="./../index.css" />
+    <link rel="icon" href="./../content/logo.jpg" />
+    <title>CKA-Update</title>
   </head>
 
   <body>
@@ -21,22 +21,30 @@
       </a>
       <ul class="side-menu">
         <li>
-          <a href="./index.html"><i class="bx bxs-dashboard"></i>Dashboard</a>
+          <a href="./../index.html"
+            ><i class="bx bxs-dashboard"></i>Dashboard</a
+          >
         </li>
         <li>
-          <a href="./search.html"><i class="bx bx-search"></i>Search</a>
+          <a href="./../html-tabs/search.html"
+            ><i class="bx bx-search"></i>Search</a
+          >
+        </li>
+        <li>
+          <a href="./../html-tabs/add.html"
+            ><i class="bx bx-user-plus"></i>Add</a
+          >
         </li>
         <li class="active">
-          <a href="#"><i class="bx bx-user-plus"></i>Add</a>
-        </li>
-        <li>
-          <a href="./update.html"><i class="bx bx-duplicate"></i>Update</a>
+          <a href="#"><i class="bx bx-duplicate"></i>Update</a>
         </li>
         <li>
           <a href="#"><i class="bx bx-group"></i>Fees</a>
         </li>
         <li>
-          <a href="./delete.html"><i class="bx bx-trash"></i>Delete</a>
+          <a href="./../html-tabs/delete.html"
+            ><i class="bx bx-trash"></i>Delete</a
+          >
         </li>
         <li>
           <a href="#"><i class="bx bx-cog"></i>Settings</a>
@@ -61,7 +69,7 @@
         <input type="checkbox" id="theme-toggle" hidden />
         <label for="theme-toggle" class="theme-toggle"></label>
         <a href="#" class="profile">
-          <img src="./content/logo.jpg" />
+          <img src="./../content/logo.jpg" />
         </a>
       </nav>
 
@@ -70,28 +78,42 @@
       <main>
         <div class="header">
           <div class="left">
-            <h1>Add</h1>
+            <h1>Update</h1>
             <ul class="breadcrumb">
               <li><a href="#"> CKA </a></li>
               /
-              <li><a href="#" class="active">Add</a></li>
+              <li><a href="#" class="active">Update</a></li>
             </ul>
+          </div>
+          <div id="sucess-dialog">
+            <h4>Sucess!</h4>
+            <p>Student updated</p>
           </div>
         </div>
 
-        <!-- add div start -->
+        <!-- update div start -->
         <div class="bottom-data">
           <div class="orders" style="height: 100%">
             <div class="header">
-              <i class="bx bx-user-plus"></i>
-              <h3>Add Student</h3>
+              <i class="bx bx-duplicate"></i>
+              <h3>Update Student</h3>
               <i class="bx bx-filter" style="padding-right: 10px"></i>
+            </div>
+            <div class="searchStudent">
+              <form id="search-student-form">
+                <div id="formsearch">
+                  <input type="search" placeholder="Search...(Student ID)" />
+                  <button class="search-btn" type="submit">
+                    <i class="bx bx-search"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div class="update-student-photo">
+              <div class="update-photo"></div>
             </div>
             <form action="">
               <div class="search-result">
-                <div class="result-top">
-                  <div class="photo"></div>
-                </div>
                 <div
                   class="result-right-data"
                   style="background-color: var(--grey)"
@@ -100,7 +122,7 @@
                     <div class="inputGroup">
                       <input
                         type="text"
-                        id="add-name"
+                        id="update-name"
                         required=""
                         autocomplete="off"
                       />
@@ -109,7 +131,7 @@
                     <div class="inputGroup">
                       <input
                         type="text"
-                        id="add-fname"
+                        id="update-fname"
                         required=""
                         autocomplete="off"
                       />
@@ -118,7 +140,7 @@
                     <div class="inputGroup">
                       <input
                         type="text"
-                        id="add-contact"
+                        id="update-contact"
                         required=""
                         autocomplete="off"
                       />
@@ -129,7 +151,7 @@
                     <div class="inputGroup">
                       <input
                         type="text"
-                        id="add-DOB"
+                        id="update-DOB"
                         required=""
                         autocomplete="off"
                       />
@@ -138,7 +160,7 @@
                     <div class="inputGroup">
                       <input
                         type="text"
-                        id="add-mname"
+                        id="update-mname"
                         required=""
                         autocomplete="off"
                       />
@@ -147,7 +169,7 @@
                     <div class="inputGroup">
                       <input
                         type="text"
-                        id="add-address"
+                        id="update-address"
                         required=""
                         autocomplete="off"
                       />
@@ -159,7 +181,7 @@
                       <label for="add-transport">Transport:</label>
                       <input
                         type="checkbox"
-                        id="add-transport"
+                        id="update-transport"
                         class="ui-checkbox"
                       />
                     </div>
@@ -167,7 +189,7 @@
                       <label for="add-diet">Diet:</label>
                       <input
                         type="checkbox"
-                        id="add-diet"
+                        id="update-diet"
                         class="ui-checkbox"
                       />
                     </div>
@@ -175,7 +197,7 @@
                       <label for="add-class">Class:</label>
                       <select name="class" id="add-class">
                         <option value="P.G.">P.G.</option>
-                        <option value="K.G">K.G.</option>
+                        <option value="K.G.">K.G.</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -207,7 +229,7 @@
                 </div>
                 <div class="add-bottom-mid2">
                   <button type="submit" id="admit-button">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Admit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   </button>
                 </div>
                 <div class="add-bottom-right">
@@ -219,10 +241,10 @@
             </form>
           </div>
         </div>
-        <!-- add div end -->
+        <!-- update div end -->
       </main>
     </div>
 
-    <script src="add.js"></script>
+    <script src="./../tabs.js/update.js"></script>
   </body>
 </html>

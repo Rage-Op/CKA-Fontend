@@ -1,6 +1,9 @@
 // MAIN LOGIC
 // MAIN LOGIC
 // MAIN LOGIC
+
+let notice = document.querySelector("#sucess-dialog");
+
 const searchFormButton = document.querySelector("#formsearch button");
 const searchFormInput = document.querySelector("#formsearch input");
 let resultName = document.querySelector("#result-name");
@@ -102,9 +105,21 @@ async function deleteEventHandler() {
     })
     .then((data) => {
       console.log("Response data:", data);
+      notice.style.opacity = "100";
+      setTimeout(() => {
+        notice.style.opacity = "0";
+      }, 2000);
     })
     .catch((error) => {
       console.error("There was a problem with the delete operation:", error);
+      notice.innerHTML = "<h4>Failed!</h4><p>Delete failed</p>";
+      notice.style.backgroundColor = "rgba(254, 205, 211, 0.7)";
+      notice.style.border = "1px solid #D32F2F";
+      notice.style.opacity = "100";
+      setTimeout(() => {
+        notice.style.opacity = "0";
+        notice.innerHTML = "<h4>Sucess!</h4><p>Student deleted</p>";
+      }, 2000);
     });
   resultName.textContent = "..........";
   resultDOB.textContent = "..........";

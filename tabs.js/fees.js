@@ -5,38 +5,35 @@ let notice = document.querySelector("#sucess-dialog");
 
 const searchFormButton = document.querySelector("#formsearch button");
 const searchFormInput = document.querySelector("#formsearch input");
-let updateName = document.querySelector("#update-name");
-let updateDOB = document.querySelector("#update-DOB");
-let updateFname = document.querySelector("#update-fname");
-let updateMname = document.querySelector("#update-mname");
-let updateContact = document.querySelector("#update-contact");
-let updateAddress = document.querySelector("#update-address");
-let updateTransport = document.querySelector("#update-transport");
-let updateDiet = document.querySelector("#update-diet");
-let updateClass = document.querySelector("#add-class");
-let photoUrl = document.querySelector(".update-photo");
-let updateStudentId = document.querySelector("#add-studentId");
-let updateAdmitDate = document.querySelector("#add-admitdate");
-let saveButton = document.querySelector("#admit-button");
+let photoUrl = document.querySelector("#fees-photo");
+let feesName = document.querySelector("#fees-name");
+let feesClass = document.querySelector("#fees-class");
+let feesStudentId = document.querySelector("#fees-studentId");
+let feesDate = document.querySelector("#fees-date");
+let feesDebit = document.querySelector("#result-debit");
+let feesCredit = document.querySelector("#result-credit");
+let feesDue = document.querySelector("#result-due");
+let creditAmount = document.querySelector("#credit-amount");
+let creditBill = document.querySelector("#credit-bill");
+let creditButton = document.querySelector("#admit-button");
 let cancelButton = document.querySelector("#cancel-button");
+const debitColumn = document.querySelector("#debit-column");
+const creditColumn = document.querySelector("#credit-column");
+
+let fetchedData;
 
 cancelButton.addEventListener("click", (event) => {
   event.preventDefault();
   searchFormInput.value = "";
-  updateName.value = "";
-  updateDOB.value = "";
-  updateFname.value = "";
-  updateMname.value = "";
-  updateContact.value = "";
-  updateAddress.value = "";
-  updateTransport.checked = false;
-  updateDiet.checked = false;
-  updateClass.value = "P.G.";
+  feesName.textContent = "....................";
+  feesClass.textContent = "....................";
   photoUrl.style.backgroundImage = 'url("./content/user-icon.jpg")';
 });
 
 searchFormButton.addEventListener("click", (event) => {
   event.preventDefault();
+  debitColumn.innerHTML = "";
+  creditColumn.innerHTML = "";
 
   if (searchFormInput.value === "") {
     console.log("not a valid student ID");
@@ -44,6 +41,36 @@ searchFormButton.addEventListener("click", (event) => {
     fetchStudent();
   }
 });
+
+//
+//
+//
+// get date
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+const currentDate = new Date();
+const day = currentDate.getDate();
+const month = months[currentDate.getMonth()];
+const year = currentDate.getFullYear();
+
+const formattedDate = `${day} ${month} ${year}`;
+feesDate.textContent = formattedDate;
+//
+//
+//
+//
 
 async function fetchStudent() {
   studentId = searchFormInput.value;
@@ -56,36 +83,59 @@ async function fetchStudent() {
     }
 
     let data = await response.json();
-    updateName.value = data.name;
-    updateDOB.value = data.DOB;
-    updateFname.value = data.fatherName;
-    updateMname.value = data.motherName;
-    updateContact.value = data.contact;
-    updateAddress.value = data.address;
-    updateStudentId.textContent = data.studentId;
-    updateAdmitDate.textContent = data.admitDate;
-    updateTransport.checked = data.transport;
-    updateDiet.checked = data.diet;
-    updateClass.value = data.class;
-    searchFormInput.value = "";
-    saveButton.addEventListener("click", saveEventHandler);
+    fetchedData = data;
+    feesName.textContent = data.name;
+    feesStudentId.textContent = data.studentId;
+    feesClass.textContent = data.class;
+    feesCredit.textContent = data.fees.credit;
+    feesDebit.textContent = data.fees.debit;
+    feesDue.textContent = data.fees.debit - data.fees.credit;
+    //
+    //
+    // logic for creating tables from data
+    data.debitAmount.forEach((object) => {
+      let row = document.createElement("tr");
+      let cell = document.createElement("td");
+      cell.innerHTML = `<div class="box">
+      <h5>${object.date}</h5>
+      <p>Nrs. ${object.amount}</p>
+      <p>${object.remark}</p>
+      </div>`;
+      row.appendChild(cell);
+      debitColumn.appendChild(row);
+    });
+    data.creditAmount.forEach((object) => {
+      let row = document.createElement("tr");
+      let cell = document.createElement("td");
+      cell.innerHTML = `<div class="box">
+      <h5>${object.date}</h5>
+      <p>Nrs. ${object.amount}</p>
+      <p>${object.bill}</p>
+      </div>`;
+      row.appendChild(cell);
+      creditColumn.appendChild(row);
+    });
+    //
+    //
+    //
+    creditButton.addEventListener("click", saveEventHandler);
 
     if (!data.photo) {
       photoUrl.style.backgroundImage = 'url("./../content/user-icon.jpg")';
     } else {
       photoUrl.style.backgroundImage = `url(${data.photo})`;
     }
+    //
+    //
+    //fees display logic
+
+    //
+    //
+    //
   } catch (error) {
     console.log(error);
-    updateName.value = "";
-    updateDOB.value = "";
-    updateFname.value = "";
-    updateMname.value = "";
-    updateContact.value = "";
-    updateAddress.value = "";
-    updateTransport.checked = false;
-    updateDiet.checked = false;
-    updateClass.value = "P.G.";
+    feesName.textContent = "....................";
+    feesClass.textContent = "....................";
     photoUrl.style.backgroundImage =
       'url("./../content/user-not-found-icon.jpg")';
     searchFormInput.value = "";
@@ -94,18 +144,31 @@ async function fetchStudent() {
 
 async function saveEventHandler(event) {
   event.preventDefault();
-  saveButton.removeEventListener("click", saveEventHandler);
+  creditButton.removeEventListener("click", saveEventHandler);
   console.log(studentId);
+  //
+  //
+  // new credit amount logic
+  let newCreditAmount = fetchedData.fees.credit + Number(creditAmount.value);
+  let newCreditArray = fetchedData.creditAmount;
+  console.log(fetchedData.fees.credit);
+  console.log(Number(creditAmount));
+  console.log(newCreditAmount);
+  console.log(newCreditArray);
+  newCreditArray.push({
+    date: `${formattedDate}`,
+    amount: `${creditAmount.value}`,
+    bill: `${creditBill.value}`,
+  });
+  //
+  //
+  //
   let data = {
-    name: `${updateName.value}`,
-    DOB: `${updateDOB.value}`,
-    class: `${updateClass.value}`,
-    fatherName: `${updateFname.value}`,
-    motherName: `${updateMname.value}`,
-    contact: `${updateContact.value}`,
-    address: `${updateAddress.value}`,
-    transport: updateTransport.checked,
-    diet: updateDiet.checked,
+    creditAmount: newCreditArray,
+    fees: {
+      debit: fetchedData.fees.debit,
+      credit: newCreditAmount,
+    },
   };
   const patchURL = `https://cka-backend.onrender.com/students/update/${studentId}`;
   const options = {
@@ -125,6 +188,7 @@ async function saveEventHandler(event) {
     .then((data) => {
       console.log("Response data:", data);
       notice.style.opacity = "100";
+      fetchStudent();
       setTimeout(() => {
         notice.style.opacity = "0";
       }, 2000);
@@ -140,16 +204,6 @@ async function saveEventHandler(event) {
         noticeToDefault();
       }, 2000);
     });
-  updateName.value = "";
-  updateDOB.value = "";
-  updateFname.value = "";
-  updateMname.value = "";
-  updateContact.value = "";
-  updateAddress.value = "";
-  updateTransport.checked = false;
-  updateDiet.checked = false;
-  updateClass.value = "P.G.";
-  photoUrl.style.backgroundImage = 'url("./content/user-icon.jpg")';
   searchFormInput.value = "";
 }
 

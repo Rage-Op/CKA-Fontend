@@ -103,34 +103,46 @@
               </form>
             </div>
             <div class="search-result">
-              <div class="result-top">
+              <div class="fees-top">
                 <div class="result-photo">
-                  <div class="photo"></div>
+                  <div class="photo" id="fees-photo"></div>
                 </div>
                 <div
-                  class="result-right-data"
+                  class="fees-bottom-data"
                   style="background-color: var(--grey)"
                 >
                   <div class="data-left">
                     <p style="font-weight: 600; color: var(--dark)">Name:</p>
-                    <p id="result-name">....................</p>
-                    <p style="font-weight: 600; color: var(--dark)">
-                      Father's Name:
-                    </p>
-                    <p id="result-fname">....................</p>
-                    <p style="font-weight: 600; color: var(--dark)">Contact:</p>
-                    <p id="result-contact">....................</p>
+                    <p id="fees-name">....................</p>
                   </div>
                   <div class="data-right">
-                    <p style="font-weight: 600; color: var(--dark)">DOB:</p>
-                    <p id="result-DOB">....................</p>
-                    <p style="font-weight: 600; color: var(--dark)">
-                      Mother's Name:
-                    </p>
-                    <p id="result-mname">....................</p>
-                    <p style="font-weight: 600; color: var(--dark)">Address:</p>
-                    <p id="result-address">....................</p>
+                    <p style="font-weight: 600; color: var(--dark)">Class:</p>
+                    <p id="fees-class">....................</p>
                   </div>
+                </div>
+              </div>
+              <div class="fees-mid">
+                <div
+                  class="fees-bottom-data"
+                  id="fees-table-wrapper"
+                  style="background-color: var(--grey)"
+                >
+                  <table id="fees-table-sheet">
+                    <thead>
+                      <tr>
+                        <th>Debit</th>
+                      </tr>
+                    </thead>
+                    <tbody id="debit-column"></tbody>
+                  </table>
+                  <table id="fees-table-sheet">
+                    <thead>
+                      <tr>
+                        <th>Credit</th>
+                      </tr>
+                    </thead>
+                    <tbody id="credit-column"></tbody>
+                  </table>
                 </div>
               </div>
               <div class="result-bottom">
@@ -153,21 +165,86 @@
                   <p>Due</p>
                 </div>
               </div>
-              <div class="delete-bottom2">
-                <button type="submit" id="admit-button">
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cancel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </button>
-                <button id="cancel-button">
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delete&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </button>
-              </div>
             </div>
+          </div>
+        </div>
+        <div class="bottom-data">
+          <div class="orders" style="height: 100%">
+            <div class="header">
+              <i class="bx bx-dollar-circle"></i>
+              <h3>Add Credit</h3>
+              <i class="bx bx-filter" style="padding-right: 10px"></i>
+            </div>
+            <form action="">
+              <div class="search-result">
+                <div class="result-top">
+                  <div class="photo"></div>
+                </div>
+                <div
+                  class="fees-credit-form"
+                  style="background-color: var(--grey)"
+                >
+                  <div class="add-left">
+                    <div class="inputGroup">
+                      <input
+                        type="text"
+                        id="credit-amount"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">Credit Amount</label>
+                    </div>
+                  </div>
+                  <div class="add-mid">
+                    <div class="inputGroup">
+                      <input
+                        type="text"
+                        id="credit-bill"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">Bill No.</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="result-bottom">
+                <div class="add-bottom-left">
+                  <li>
+                    <i class="bx bx-hash"></i>
+                    <span class="info">
+                      <h3 id="fees-studentId">...</h3>
+                      <p>Student Id</p>
+                    </span>
+                  </li>
+                </div>
+                <div class="add-bottom-mid" style="width: 324px">
+                  <li>
+                    <i class="bx bx-calendar-check"></i>
+                    <span class="info">
+                      <h3 id="fees-date">...</h3>
+                      <p>Date</p>
+                    </span>
+                  </li>
+                </div>
+                <div class="add-bottom-mid2">
+                  <button type="submit" id="admit-button">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Credit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  </button>
+                </div>
+                <div class="add-bottom-right">
+                  <button id="cancel-button">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cancel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
         <!-- End of Delete-->
       </main>
     </div>
 
-    <script src="./../tabs.js/delete.js"></script>
+    <script src="./../tabs.js/fees.js"></script>
   </body>
 </html>

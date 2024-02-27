@@ -9,7 +9,7 @@
     />
     <link rel="stylesheet" href="./../index.css" />
     <link rel="icon" href="./../content/logo.jpg" />
-    <title>CKA-Search</title>
+    <title>CKA-Fees</title>
   </head>
 
   <body>
@@ -25,26 +25,20 @@
             ><i class="bx bxs-dashboard"></i>Dashboard</a
           >
         </li>
+        <li>
+          <a href="./search.html"><i class="bx bx-search"></i>Search</a>
+        </li>
+        <li>
+          <a href="./add.html"><i class="bx bx-user-plus"></i>Add</a>
+        </li>
+        <li>
+          <a href="./update.html"><i class="bx bx-duplicate"></i>Update</a>
+        </li>
         <li class="active">
-          <a href="#"><i class="bx bx-search"></i>Search</a>
+          <a href="#"><i class="bx bx-group"></i>Fees</a>
         </li>
         <li>
-          <a href="./../html-tabs/add.html"
-            ><i class="bx bx-user-plus"></i>Add</a
-          >
-        </li>
-        <li>
-          <a href="./../html-tabs/update.html"
-            ><i class="bx bx-duplicate"></i>Update</a
-          >
-        </li>
-        <li>
-          <a href="./fees.html"><i class="bx bx-group"></i>Fees</a>
-        </li>
-        <li>
-          <a href="./../html-tabs/delete.html"
-            ><i class="bx bx-trash"></i>Delete</a
-          >
+          <a href="./delete.html"><i class="bx bx-trash"></i>Delete</a>
         </li>
         <li>
           <a href="./settings.html"><i class="bx bx-cog"></i>Settings</a>
@@ -76,26 +70,25 @@
       <!-- End of Navbar -->
 
       <main>
-        <div class="header">
+        <div class="header" id="dialog-parent">
           <div class="left">
-            <h1>Search</h1>
+            <h1>Fees</h1>
             <ul class="breadcrumb">
               <li><a href="#"> CKA </a></li>
               /
-              <li><a href="#" class="active">Search</a></li>
+              <li><a href="#" class="active">Fees</a></li>
             </ul>
           </div>
           <div id="sucess-dialog">
             <h4>Sucess!</h4>
-            <p>Student found</p>
+            <p>Fees updated</p>
           </div>
         </div>
-
-        <!-- Search div start -->
+        <!-- Start of delete -->
         <div class="bottom-data">
           <div class="orders" style="height: 100%">
             <div class="header">
-              <i class="bx bx-search"></i>
+              <i class="bx bx-group"></i>
               <h3>Search Student</h3>
               <i class="bx bx-filter" style="padding-right: 10px"></i>
             </div>
@@ -160,13 +153,21 @@
                   <p>Due</p>
                 </div>
               </div>
+              <div class="delete-bottom2">
+                <button type="submit" id="admit-button">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cancel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </button>
+                <button id="cancel-button">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delete&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </button>
+              </div>
             </div>
           </div>
         </div>
-        <!-- Search div end -->
+        <!-- End of Delete-->
       </main>
     </div>
 
-    <script src="./../tabs.js/search.js"></script>
+    <script src="./../tabs.js/delete.js"></script>
   </body>
 </html>

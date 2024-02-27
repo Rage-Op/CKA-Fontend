@@ -75,7 +75,8 @@ async function fetchStudent() {
     resultAddress.textContent = "..........";
     resultCredit.textContent = 0;
     resultDebit.textContent = 0;
-    photoUrl.style.backgroundImage = 'url("./content/user-icon.jpg")';
+    photoUrl.style.backgroundImage =
+      'url("./../content/user-not-found-icon.jpg")';
     searchFormInput.value = "";
 
     // resultDue.textContent = data.fees.debit - data.fees.credit;

@@ -9,7 +9,7 @@
     />
     <link rel="stylesheet" href="./../index.css" />
     <link rel="icon" href="./../content/logo.jpg" />
-    <title>CKA-Dashboard</title>
+    <title>CKA-Add</title>
   </head>
 
   <body>
@@ -26,19 +26,25 @@
           >
         </li>
         <li>
-          <a href="./search.html"><i class="bx bx-search"></i>Search</a>
+          <a href="./../html-tabs/search.html"
+            ><i class="bx bx-search"></i>Search</a
+          >
         </li>
         <li>
           <a href="./add.html"><i class="bx bx-user-plus"></i>Add</a>
         </li>
         <li>
-          <a href="./update.html"><i class="bx bx-duplicate"></i>Update</a>
+          <a href="./../html-tabs/update.html"
+            ><i class="bx bx-duplicate"></i>Update</a
+          >
         </li>
         <li>
-          <a href="#"><i class="bx bx-group"></i>Fees</a>
+          <a href="./fees.html"><i class="bx bx-group"></i>Fees</a>
         </li>
         <li>
-          <a href="./delete.html"><i class="bx bx-trash"></i>Delete</a>
+          <a href="./../html-tabs/delete.html"
+            ><i class="bx bx-trash"></i>Delete</a
+          >
         </li>
         <li class="active">
           <a href="#"><i class="bx bx-cog"></i>Settings</a>
@@ -59,7 +65,7 @@
     <div class="content">
       <!-- Navbar -->
       <nav>
-        <i id="nav-dash" class="bx bx-menu"></i>
+        <i class="bx bx-menu" id="nav-dash"></i>
         <input type="checkbox" id="theme-toggle" hidden />
         <label for="theme-toggle" class="theme-toggle"></label>
         <a href="#" class="profile">
@@ -72,128 +78,168 @@
       <main>
         <div class="header">
           <div class="left">
-            <h1>Dashboard</h1>
+            <h1>Settings</h1>
             <ul class="breadcrumb">
               <li><a href="#"> CKA </a></li>
               /
-              <li><a href="#" class="active">Admin</a></li>
+              <li><a href="#" class="active">Settings</a></li>
             </ul>
+          </div>
+          <div id="sucess-dialog">
+            <h4>Sucess!</h4>
+            <p>Settings updated</p>
           </div>
         </div>
 
-        <!-- Insights -->
-        <ul class="insights">
-          <li>
-            <i class="bx bx-calendar-check"></i>
-            <span class="info">
-              <h3 id="index-date">...</h3>
-              <p>Date</p>
-            </span>
-          </li>
-          <li>
-            <i class="bx bx-show-alt"></i>
-            <span class="info">
-              <h3 id="index-users">...</h3>
-              <p>Admin Users</p>
-            </span>
-          </li>
-          <li>
-            <i class="bx bx-line-chart"></i>
-            <span class="info">
-              <h3 id="index-students">...</h3>
-              <p>Students</p>
-            </span>
-          </li>
-          <li>
-            <i class="bx bx-dollar-circle"></i>
-            <span class="info">
-              <h3 id="index-due">...</h3>
-              <p>Due Fees</p>
-            </span>
-          </li>
-        </ul>
-        <!-- End of Insights -->
-
+        <!-- add div start -->
         <div class="bottom-data">
-          <div class="orders">
+          <div class="orders" style="height: 100%">
             <div class="header">
-              <i class="bx bx-receipt"></i>
-              <h3>Recently Admitted</h3>
-              <i class="bx bx-filter"></i>
-              <i class="bx bx-search"></i>
+              <i class="bx bx-cog"></i>
+              <h3>Update settings</h3>
+              <i class="bx bx-filter" style="padding-right: 10px"></i>
             </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Students</th>
-                  <th>Date of Birth</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <img src="./../content/logo.jpg" />
-                    <p>Pravin Maurya</p>
-                  </td>
-                  <td>14-08-2023</td>
-                  <td><span class="status completed">Completed</span></td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="./../content/logo.jpg" />
-                    <p>Pratik Maurya</p>
-                  </td>
-                  <td>14-08-2023</td>
-                  <td><span class="status pending">Pending</span></td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="./../content/logo.jpg" />
-                    <p>Pradip Maurya</p>
-                  </td>
-                  <td>14-08-2023</td>
-                  <td><span class="status process">Processing</span></td>
-                </tr>
-              </tbody>
-            </table>
+            <form action="">
+              <div class="search-result">
+                <h4 style="text-align: center; margin-bottom: 20px">
+                  Monthly Fees of Individual Student
+                </h4>
+                <div
+                  class="result-right-data"
+                  style="background-color: var(--grey)"
+                >
+                  <div class="settings-left">
+                    <div class="inputGroup">
+                      <input
+                        type="text"
+                        id="settings-PG"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">P.G.</label>
+                    </div>
+                    <div class="inputGroup">
+                      <input
+                        type="text"
+                        id="settings-KG"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">K.G.</label>
+                    </div>
+                    <div class="inputGroup">
+                      <input
+                        type="text"
+                        id="settings-nursery"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">Nursery</label>
+                    </div>
+                    <div class="inputGroup">
+                      <input
+                        type="text"
+                        id="settings-transport"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">Transport</label>
+                    </div>
+                  </div>
+                  <div class="settings-mid">
+                    <div class="inputGroup">
+                      <input
+                        type="text"
+                        id="settings-class1"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">Class 1</label>
+                    </div>
+                    <div class="inputGroup">
+                      <input
+                        type="text"
+                        id="settings-class2"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">Class 2</label>
+                    </div>
+                    <div class="inputGroup">
+                      <input
+                        type="text"
+                        id="settings-class3"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">Class 3</label>
+                    </div>
+                    <div class="inputGroup">
+                      <input
+                        type="text"
+                        id="settings-diet"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">Diet</label>
+                    </div>
+                  </div>
+                  <div class="settings-right">
+                    <div class="inputGroup">
+                      <input
+                        type="text"
+                        id="settings-class4"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">Class 4</label>
+                    </div>
+                    <div class="inputGroup">
+                      <input
+                        type="text"
+                        id="settings-class5"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">Class 5</label>
+                    </div>
+                    <div class="inputGroup">
+                      <input
+                        type="text"
+                        id="settings-class6"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">Class 6</label>
+                    </div>
+                    <div class="inputGroup">
+                      <input
+                        type="text"
+                        id="settings-exam"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">Exam</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="settings-bottom">
+                <div class="add-bottom-mid2">
+                  <button type="submit" id="admit-button">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  </button>
+                </div>
+                <div class="add-bottom-right">
+                  <button id="cancel-button">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cancel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
-
-          <!-- Reminders -->
-          <div class="reminders">
-            <div class="header">
-              <i class="bx bx-note"></i>
-              <h3>Remiders</h3>
-              <i class="bx bx-filter"></i>
-              <i class="bx bx-plus"></i>
-            </div>
-            <ul class="task-list">
-              <li class="completed">
-                <div class="task-title">
-                  <i class="bx bx-check-circle"></i>
-                  <p>Start Our Meeting</p>
-                </div>
-                <i class="bx bx-dots-vertical-rounded"></i>
-              </li>
-              <li class="completed">
-                <div class="task-title">
-                  <i class="bx bx-check-circle"></i>
-                  <p>Analyse Our Site</p>
-                </div>
-                <i class="bx bx-dots-vertical-rounded"></i>
-              </li>
-              <li class="not-completed">
-                <div class="task-title">
-                  <i class="bx bx-x-circle"></i>
-                  <p>Play Footbal</p>
-                </div>
-                <i class="bx bx-dots-vertical-rounded"></i>
-              </li>
-            </ul>
-          </div>
-
-          <!-- End of Reminders-->
         </div>
+        <!-- add div end -->
       </main>
     </div>
 

@@ -1,8 +1,22 @@
 // MAIN LOGIC
 // MAIN LOGIC
 // MAIN LOGIC
-let notice = document.querySelector("#sucess-dialog");
+const toggler = document.getElementById("theme-toggle");
 
+function checkStoredTheme() {
+  let darkTheme = localStorage.getItem("darkTheme");
+  console.log(darkTheme);
+  if (darkTheme === "true") {
+    toggler.checked = true;
+    document.body.classList.add("dark");
+  } else {
+    toggler.checked = false;
+    document.body.classList.remove("dark");
+  }
+}
+
+let notice = document.querySelector("#sucess-dialog");
+let creditCheckbox = document.querySelector(".credit-sucess-checkbox");
 const searchFormButton = document.querySelector("#formsearch button");
 const searchFormInput = document.querySelector("#formsearch input");
 let photoUrl = document.querySelector("#fees-photo");
@@ -19,30 +33,35 @@ let creditButton = document.querySelector("#admit-button");
 let cancelButton = document.querySelector("#cancel-button");
 const debitColumn = document.querySelector("#debit-column");
 const creditColumn = document.querySelector("#credit-column");
-
 let fetchedData;
+let globalStudentId;
 
 cancelButton.addEventListener("click", (event) => {
   event.preventDefault();
   searchFormInput.value = "";
   feesName.textContent = "....................";
   feesClass.textContent = "....................";
-  photoUrl.style.backgroundImage = 'url("./content/user-icon.jpg")';
+  feesDebit.textContent = 0;
+  feesCredit.textContent = 0;
+  feesDue.textContent = 0;
+  debitColumn.innerHTML = "";
+  creditColumn.innerHTML = "";
+  feesStudentId.textContent = "...";
+  photoUrl.style.backgroundImage = 'url("./../content/user-icon.jpg")';
 });
 
 searchFormButton.addEventListener("click", (event) => {
   event.preventDefault();
-  debitColumn.innerHTML = "";
-  creditColumn.innerHTML = "";
-
   if (searchFormInput.value === "") {
     console.log("not a valid student ID");
   } else {
+    fetchedData = "";
+    globalStudentId = searchFormInput.value;
+    creditColumn.innerHTML = "";
+    debitColumn.innerHTML = "";
     fetchStudent();
   }
 });
-
-//
 //
 //
 // get date
@@ -64,24 +83,20 @@ const currentDate = new Date();
 const day = currentDate.getDate();
 const month = months[currentDate.getMonth()];
 const year = currentDate.getFullYear();
-
 const formattedDate = `${day} ${month} ${year}`;
 feesDate.textContent = formattedDate;
 //
 //
 //
-//
-
 async function fetchStudent() {
-  studentId = searchFormInput.value;
+  debitColumn.innerHTML = "";
+  creditColumn.innerHTML = "";
   let URL = "https://cka-backend.onrender.com/students/search";
-
   try {
-    let response = await fetch(`${URL}/${studentId}`);
+    let response = await fetch(`${URL}/${globalStudentId}`);
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-
     let data = await response.json();
     fetchedData = data;
     feesName.textContent = data.name;
@@ -90,6 +105,11 @@ async function fetchStudent() {
     feesCredit.textContent = data.fees.credit;
     feesDebit.textContent = data.fees.debit;
     feesDue.textContent = data.fees.debit - data.fees.credit;
+    if (!data.photo) {
+      photoUrl.style.backgroundImage = 'url("./../content/user-icon.jpg")';
+    } else {
+      photoUrl.style.backgroundImage = `url(${data.photo})`;
+    }
     //
     //
     // logic for creating tables from data
@@ -110,101 +130,120 @@ async function fetchStudent() {
       cell.innerHTML = `<div class="box">
       <h5>${object.date}</h5>
       <p>Nrs. ${object.amount}</p>
-      <p>${object.bill}</p>
+      <p>Bill No. ${object.bill}</p>
       </div>`;
       row.appendChild(cell);
       creditColumn.appendChild(row);
     });
-    //
-    //
-    //
     creditButton.addEventListener("click", saveEventHandler);
-
-    if (!data.photo) {
-      photoUrl.style.backgroundImage = 'url("./../content/user-icon.jpg")';
-    } else {
-      photoUrl.style.backgroundImage = `url(${data.photo})`;
-    }
-    //
-    //
-    //fees display logic
-
-    //
-    //
-    //
   } catch (error) {
     console.log(error);
     feesName.textContent = "....................";
     feesClass.textContent = "....................";
+    feesStudentId.textContent = "...";
+    feesDebit.textContent = 0;
+    feesCredit.textContent = 0;
+    feesDue.textContent = 0;
+    debitColumn.innerHTML = "";
+    creditColumn.innerHTML = "";
     photoUrl.style.backgroundImage =
       'url("./../content/user-not-found-icon.jpg")';
     searchFormInput.value = "";
   }
 }
-
+//
+//
+//
 async function saveEventHandler(event) {
   event.preventDefault();
-  creditButton.removeEventListener("click", saveEventHandler);
-  console.log(studentId);
-  //
-  //
-  // new credit amount logic
-  let newCreditAmount = fetchedData.fees.credit + Number(creditAmount.value);
-  let newCreditArray = fetchedData.creditAmount;
-  console.log(fetchedData.fees.credit);
-  console.log(Number(creditAmount));
-  console.log(newCreditAmount);
-  console.log(newCreditArray);
-  newCreditArray.push({
-    date: `${formattedDate}`,
-    amount: `${creditAmount.value}`,
-    bill: `${creditBill.value}`,
-  });
-  //
-  //
-  //
-  let data = {
-    creditAmount: newCreditArray,
-    fees: {
-      debit: fetchedData.fees.debit,
-      credit: newCreditAmount,
-    },
-  };
-  const patchURL = `https://cka-backend.onrender.com/students/update/${studentId}`;
-  const options = {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  };
-  await fetch(patchURL, options)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log("Response data:", data);
-      notice.style.opacity = "100";
-      fetchStudent();
-      setTimeout(() => {
-        notice.style.opacity = "0";
-      }, 2000);
-    })
-    .catch((error) => {
-      console.error("There was a problem with the delete operation:", error);
-      notice.innerHTML = "<h4>Failed!</h4><p>Update failed</p>";
-      notice.style.backgroundColor = "rgba(254, 205, 211, 0.7)";
-      notice.style.border = "1px solid #D32F2F";
-      notice.style.opacity = "100";
-      setTimeout(() => {
-        notice.style.opacity = "0";
-        noticeToDefault();
-      }, 2000);
+  document.querySelector("#credit-chx").style.backgroundColor = "";
+  if (creditAmount.value == "" || creditBill.value == "") {
+    console.log("credit amount or bill number not defined");
+  } else if (isNaN(creditAmount.value) || isNaN(creditBill.value)) {
+    console.log("Invalid credit amount ot bill number");
+  } else {
+    creditButton.removeEventListener("click", saveEventHandler);
+    // new credit amount logic
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    let totalCreditAmount = 0;
+    fetchedData.creditAmount.forEach((credits) => {});
+    let newCreditAmount = fetchedData.fees.credit + Number(creditAmount.value);
+    let newCreditArray = fetchedData.creditAmount;
+    newCreditArray.push({
+      date: `${formattedDate}`,
+      amount: `${creditAmount.value}`,
+      bill: `${creditBill.value}`,
     });
-  searchFormInput.value = "";
+    //
+    let data = {
+      creditAmount: newCreditArray,
+      fees: {
+        debit: fetchedData.fees.debit,
+        credit: newCreditAmount,
+      },
+    };
+    const patchURL = `https://cka-backend.onrender.com/students/update/${globalStudentId}`;
+    const options = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+    await fetch(patchURL, options)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        creditAmount.value = "";
+        creditBill.value = "";
+        creditCheckbox.checked = true;
+        setTimeout(() => {
+          creditCheckbox.checked = false;
+        }, 3000);
+        console.log("Response data:", data);
+        notice.style.opacity = "100";
+        fetchStudent();
+        setTimeout(() => {
+          notice.style.opacity = "0";
+        }, 2000);
+      })
+      .catch((error) => {
+        console.error("There was a problem with the credit operation:", error);
+        notice.innerHTML = "<h4>Failed!</h4><p>Update failed</p>";
+        notice.style.backgroundColor = "rgba(254, 205, 211, 0.7)";
+        notice.style.border = "1px solid #D32F2F";
+        notice.style.opacity = "100";
+        setTimeout(() => {
+          notice.style.opacity = "0";
+          noticeToDefault();
+        }, 2000);
+        document.querySelector("#credit-chx").style.backgroundColor = "red";
+      });
+    searchFormInput.value = "";
+  }
 }
 
 function noticeToDefault() {
@@ -247,12 +286,13 @@ window.addEventListener("resize", () => {
   }
 });
 // Theme
-const toggler = document.getElementById("theme-toggle");
-
 toggler.addEventListener("change", function () {
   if (this.checked) {
     document.body.classList.add("dark");
+    localStorage.setItem("darkTheme", true);
   } else {
     document.body.classList.remove("dark");
+    localStorage.setItem("darkTheme", false);
   }
 });
+checkStoredTheme();

@@ -1,8 +1,21 @@
 // MAIN LOGIC
 // MAIN LOGIC
 // MAIN LOGIC
-let notice = document.querySelector("#sucess-dialog");
+const toggler = document.getElementById("theme-toggle");
 
+function checkStoredTheme() {
+  let darkTheme = localStorage.getItem("darkTheme");
+  console.log(darkTheme);
+  if (darkTheme === "true") {
+    toggler.checked = true;
+    document.body.classList.add("dark");
+  } else {
+    toggler.checked = false;
+    document.body.classList.remove("dark");
+  }
+}
+
+let notice = document.querySelector("#sucess-dialog");
 let settingsPG = document.querySelector("#settings-PG");
 let settingsKG = document.querySelector("#settings-KG");
 let settingsNursery = document.querySelector("#settings-nursery");
@@ -192,12 +205,13 @@ window.addEventListener("resize", () => {
   }
 });
 // Theme
-const toggler = document.getElementById("theme-toggle");
-
 toggler.addEventListener("change", function () {
   if (this.checked) {
     document.body.classList.add("dark");
+    localStorage.setItem("darkTheme", true);
   } else {
     document.body.classList.remove("dark");
+    localStorage.setItem("darkTheme", false);
   }
 });
+checkStoredTheme();

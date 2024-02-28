@@ -1,6 +1,20 @@
 // MAIN LOGIC
 // MAIN LOGIC
 // MAIN LOGIC
+const toggler = document.getElementById("theme-toggle");
+
+function checkStoredTheme() {
+  let darkTheme = localStorage.getItem("darkTheme");
+  console.log(darkTheme);
+  if (darkTheme === "true") {
+    toggler.checked = true;
+    document.body.classList.add("dark");
+  } else {
+    toggler.checked = false;
+    document.body.classList.remove("dark");
+  }
+}
+
 window.addEventListener("load", () => {
   fetchData();
 });
@@ -57,13 +71,13 @@ window.addEventListener("resize", () => {
     sideBar.classList.remove("close");
   }
 });
-
-const toggler = document.getElementById("theme-toggle");
-
 toggler.addEventListener("change", function () {
   if (this.checked) {
     document.body.classList.add("dark");
+    localStorage.setItem("darkTheme", true);
   } else {
     document.body.classList.remove("dark");
+    localStorage.setItem("darkTheme", false);
   }
 });
+checkStoredTheme();

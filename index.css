@@ -462,7 +462,6 @@ body {
   align-items: flex-start;
   gap: 12px;
   padding-right: 80px;
-  /* height:  */
 }
 
 .transport,
@@ -476,12 +475,14 @@ body {
   width: 100%;
 }
 
-#add-class {
+#add-class,
+#add-gender {
   width: 100%;
   border: none;
   background: white;
   border-radius: 5px;
   border: 1px solid #d9d9d9;
+  outline: none;
 }
 
 .result-bottom li {

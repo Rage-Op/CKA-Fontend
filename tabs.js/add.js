@@ -28,6 +28,7 @@ let addDue = document.querySelector("#result-due");
 let addTransport = document.querySelector("#add-transport");
 let addDiet = document.querySelector("#add-diet");
 let addClass = document.querySelector("#add-class");
+let addGender = document.querySelector("#add-gender");
 let photoUrl = document.querySelector(".photo");
 let nextStudentId;
 let settings;
@@ -108,6 +109,7 @@ cancelButton.addEventListener("click", (event) => {
   addTransport.checked = false;
   addDiet.checked = false;
   addClass.value = "P.G.";
+  addGender.value = "male";
   addStudentId.textContent = "...";
   addAdmitDate.textContent = "...";
 });
@@ -208,6 +210,7 @@ async function addStudent(nextStudentId, admitDate) {
   //
   let jsonData = {
     name: `${addName.value}`,
+    gender: `${addGender.value}`,
     class: `${addClass.value}`,
     studentId: `${nextStudentId}`,
     DOB: `${addDOB.value}`,
@@ -273,6 +276,7 @@ async function addStudent(nextStudentId, admitDate) {
   addTransport.checked = false;
   addDiet.checked = false;
   addClass.value = "P.G.";
+  addGender.value = "male";
   addStudentId.textContent = "...";
   addAdmitDate.textContent = "...";
 }

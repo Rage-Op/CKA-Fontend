@@ -47,6 +47,8 @@ cancelButton.addEventListener("click", () => {
   resultAddress.textContent = "....................";
   resultTransport.textContent = "....................";
   resultDiet.textContent = "....................";
+  resultClass.textContent = "....................";
+  resultAdmitDate.textContent = "....................";
   resultGender.textContent = "....................";
   resultStudentId.textContent = "....................";
   resultCredit.textContent = 0;
@@ -98,14 +100,16 @@ async function fetchStudent() {
     }
   } catch (error) {
     console.log(error);
-    resultName.textContent = "..........";
-    resultDOB.textContent = "..........";
-    resultFname.textContent = "..........";
-    resultMname.textContent = "..........";
-    resultContact.textContent = "..........";
-    resultAddress.textContent = "..........";
+    resultName.textContent = "....................";
+    resultDOB.textContent = "....................";
+    resultFname.textContent = "....................";
+    resultMname.textContent = "....................";
+    resultContact.textContent = "....................";
+    resultAddress.textContent = "....................";
     resultTransport.textContent = "....................";
     resultDiet.textContent = "....................";
+    resultClass.textContent = "....................";
+    resultAdmitDate.textContent = "....................";
     resultGender.textContent = "....................";
     resultStudentId.textContent = "....................";
     resultCredit.textContent = 0;
@@ -147,14 +151,16 @@ async function deleteEventHandler() {
         notice.innerHTML = "<h4>Sucess!</h4><p>Student deleted</p>";
       }, 2000);
     });
-  resultName.textContent = "..........";
-  resultDOB.textContent = "..........";
-  resultFname.textContent = "..........";
-  resultMname.textContent = "..........";
-  resultContact.textContent = "..........";
-  resultAddress.textContent = "..........";
+  resultName.textContent = "....................";
+  resultDOB.textContent = "....................";
+  resultFname.textContent = "....................";
+  resultMname.textContent = "....................";
+  resultContact.textContent = "....................";
+  resultAddress.textContent = "....................";
   resultTransport.textContent = "....................";
   resultDiet.textContent = "....................";
+  resultClass.textContent = "....................";
+  resultAdmitDate.textContent = "....................";
   resultGender.textContent = "....................";
   resultStudentId.textContent = "....................";
   resultCredit.textContent = 0;

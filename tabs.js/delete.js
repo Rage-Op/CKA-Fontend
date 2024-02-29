@@ -2,7 +2,6 @@
 // MAIN LOGIC
 // MAIN LOGIC
 const toggler = document.getElementById("theme-toggle");
-
 function checkStoredTheme() {
   let darkTheme = localStorage.getItem("darkTheme");
   if (darkTheme === "true") {
@@ -13,7 +12,7 @@ function checkStoredTheme() {
     document.body.classList.remove("dark");
   }
 }
-
+//
 let notice = document.querySelector("#sucess-dialog");
 const searchFormButton = document.querySelector("#formsearch button");
 const searchFormInput = document.querySelector("#formsearch input");
@@ -23,6 +22,10 @@ let resultFname = document.querySelector("#result-fname");
 let resultMname = document.querySelector("#result-mname");
 let resultContact = document.querySelector("#result-contact");
 let resultAddress = document.querySelector("#result-address");
+let resultClass = document.querySelector("#result-class");
+let resultAdmitDate = document.querySelector("#result-admit-date");
+let resultTransport = document.querySelector("#result-transport");
+let resultDiet = document.querySelector("#result-diet");
 let resultCredit = document.querySelector("#result-credit");
 let resultDebit = document.querySelector("#result-debit");
 let resultDue = document.querySelector("#result-due");
@@ -31,7 +34,7 @@ let idToBeDeleted;
 let cancelButton = document.querySelector("#admit-button");
 let deleteButton = document.querySelector("#cancel-button");
 // Reminder: the selector for cancelButton and deleteButton doesnot makes sense but ignore it!!
-
+//
 cancelButton.addEventListener("click", () => {
   searchFormInput.value = "";
   resultName.textContent = "....................";
@@ -44,7 +47,7 @@ cancelButton.addEventListener("click", () => {
   resultDebit.textContent = 0;
   resultDue.textContent = 0;
 });
-
+//
 searchFormButton.addEventListener("click", (event) => {
   event.preventDefault();
 
@@ -54,17 +57,15 @@ searchFormButton.addEventListener("click", (event) => {
     fetchStudent();
   }
 });
-
+//
 async function fetchStudent() {
   studentId = searchFormInput.value;
   let URL = "https://cka-backend.onrender.com/students/search";
-
   try {
     let response = await fetch(`${URL}/${studentId}`);
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-
     let data = await response.json();
     resultName.textContent = data.name;
     resultDOB.textContent = data.DOB;
@@ -72,13 +73,16 @@ async function fetchStudent() {
     resultMname.textContent = data.motherName;
     resultContact.textContent = data.contact;
     resultAddress.textContent = data.address;
+    resultClass.textContent = data.class;
+    resultAdmitDate.textContent = data.admitDate;
+    resultTransport.textContent = data.transport;
+    resultDiet.textContent = data.diet;
     resultCredit.textContent = data.fees.credit;
     resultDebit.textContent = data.fees.debit;
     resultDue.textContent = data.fees.debit - data.fees.credit;
     idToBeDeleted = data.studentId;
     searchFormInput.value = "";
     deleteButton.addEventListener("click", deleteEventHandler);
-
     if (!data.photo) {
       photoUrl.style.backgroundImage = 'url("./content/user-icon.jpg")';
     } else {
@@ -99,7 +103,6 @@ async function fetchStudent() {
     resultDue.textContent = 0;
   }
 }
-
 async function deleteEventHandler() {
   deleteButton.removeEventListener("click", deleteEventHandler);
   console.log(studentId);
@@ -147,11 +150,9 @@ async function deleteEventHandler() {
 // MAIN LOGIC
 // MAIN LOGIC
 // MAIN LOGIC
-
 const sideLinks = document.querySelectorAll(
   ".sidebar .side-menu li a:not(.logout)"
 );
-
 sideLinks.forEach((item) => {
   const li = item.parentElement;
   item.addEventListener("click", () => {
@@ -168,7 +169,6 @@ const sideBar = document.querySelector(".sidebar");
 menuBar.addEventListener("click", () => {
   sideBar.classList.toggle("close");
 });
-
 window.addEventListener("resize", () => {
   if (window.innerWidth < 768) {
     sideBar.classList.add("close");

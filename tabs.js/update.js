@@ -2,7 +2,6 @@
 // MAIN LOGIC
 // MAIN LOGIC
 const toggler = document.getElementById("theme-toggle");
-
 function checkStoredTheme() {
   let darkTheme = localStorage.getItem("darkTheme");
   if (darkTheme === "true") {
@@ -13,9 +12,8 @@ function checkStoredTheme() {
     document.body.classList.remove("dark");
   }
 }
-
+//
 let notice = document.querySelector("#sucess-dialog");
-
 const searchFormButton = document.querySelector("#formsearch button");
 const searchFormInput = document.querySelector("#formsearch input");
 let updateName = document.querySelector("#update-name");
@@ -32,7 +30,7 @@ let updateStudentId = document.querySelector("#add-studentId");
 let updateAdmitDate = document.querySelector("#add-admitdate");
 let saveButton = document.querySelector("#admit-button");
 let cancelButton = document.querySelector("#cancel-button");
-
+//
 cancelButton.addEventListener("click", (event) => {
   event.preventDefault();
   searchFormInput.value = "";
@@ -47,27 +45,32 @@ cancelButton.addEventListener("click", (event) => {
   updateClass.value = "P.G.";
   photoUrl.style.backgroundImage = 'url("./content/user-icon.jpg")';
 });
-
+//
 searchFormButton.addEventListener("click", (event) => {
   event.preventDefault();
-
   if (searchFormInput.value === "") {
     console.log("not a valid student ID");
+    notice.innerHTML = "<h4>Failed!</h4><p>Search failed</p>";
+    notice.style.backgroundColor = "rgba(254, 205, 211, 0.7)";
+    notice.style.border = "1px solid #D32F2F";
+    notice.style.opacity = "100";
+    setTimeout(() => {
+      notice.style.opacity = "0";
+      noticeToDefault();
+    }, 2000);
   } else {
     fetchStudent();
   }
 });
-
+//
 async function fetchStudent() {
   studentId = searchFormInput.value;
   let URL = "https://cka-backend.onrender.com/students/search";
-
   try {
     let response = await fetch(`${URL}/${studentId}`);
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-
     let data = await response.json();
     updateName.value = data.name;
     updateDOB.value = data.DOB;
@@ -82,7 +85,6 @@ async function fetchStudent() {
     updateClass.value = data.class;
     searchFormInput.value = "";
     saveButton.addEventListener("click", saveEventHandler);
-
     if (!data.photo) {
       photoUrl.style.backgroundImage = 'url("./../content/user-icon.jpg")';
     } else {
@@ -104,7 +106,6 @@ async function fetchStudent() {
     searchFormInput.value = "";
   }
 }
-
 async function saveEventHandler(event) {
   event.preventDefault();
   saveButton.removeEventListener("click", saveEventHandler);
@@ -165,7 +166,7 @@ async function saveEventHandler(event) {
   photoUrl.style.backgroundImage = 'url("./../content/user-icon.jpg")';
   searchFormInput.value = "";
 }
-
+//
 function noticeToDefault() {
   setTimeout(() => {
     notice.style.backgroundColor = "rgba(187, 247, 208, 0.7)";
@@ -176,7 +177,6 @@ function noticeToDefault() {
 // MAIN LOGIC
 // MAIN LOGIC
 // MAIN LOGIC
-
 const sideLinks = document.querySelectorAll(
   ".sidebar .side-menu li a:not(.logout)"
 );

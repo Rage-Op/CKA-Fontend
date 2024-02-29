@@ -2,7 +2,6 @@
 // MAIN LOGIC
 // MAIN LOGIC
 const toggler = document.getElementById("theme-toggle");
-
 function checkStoredTheme() {
   let darkTheme = localStorage.getItem("darkTheme");
   if (darkTheme === "true") {
@@ -13,9 +12,8 @@ function checkStoredTheme() {
     document.body.classList.remove("dark");
   }
 }
-
+//
 let notice = document.querySelector("#sucess-dialog");
-
 const searchFormButton = document.querySelector("#formsearch button");
 const searchFormInput = document.querySelector("#formsearch input");
 let resultName = document.querySelector("#result-name");
@@ -24,31 +22,40 @@ let resultFname = document.querySelector("#result-fname");
 let resultMname = document.querySelector("#result-mname");
 let resultContact = document.querySelector("#result-contact");
 let resultAddress = document.querySelector("#result-address");
+let resultClass = document.querySelector("#result-class");
+let resultAdmitDate = document.querySelector("#result-admit-date");
+let resultTransport = document.querySelector("#result-transport");
+let resultDiet = document.querySelector("#result-diet");
 let resultCredit = document.querySelector("#result-credit");
 let resultDebit = document.querySelector("#result-debit");
 let resultDue = document.querySelector("#result-due");
 let photoUrl = document.querySelector(".photo");
-
+//
 searchFormButton.addEventListener("click", (event) => {
   event.preventDefault();
-
   if (searchFormInput.value === "") {
     console.log("not a valid student ID");
+    notice.innerHTML = "<h4>Failed!</h4><p>Student not found</p>";
+    notice.style.backgroundColor = "rgba(254, 205, 211, 0.7)";
+    notice.style.border = "1px solid #D32F2F";
+    notice.style.opacity = "100";
+    setTimeout(() => {
+      notice.style.opacity = "0";
+      noticeToDefault();
+    }, 2000);
   } else {
     fetchStudent();
   }
 });
-
+//
 async function fetchStudent() {
   studentId = searchFormInput.value;
   let URL = "https://cka-backend.onrender.com/students/search";
-
   try {
     let response = await fetch(`${URL}/${studentId}`);
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-
     let data = await response.json();
     resultName.textContent = data.name;
     resultDOB.textContent = data.DOB;
@@ -56,6 +63,10 @@ async function fetchStudent() {
     resultMname.textContent = data.motherName;
     resultContact.textContent = data.contact;
     resultAddress.textContent = data.address;
+    resultClass.textContent = data.class;
+    resultAdmitDate.textContent = data.admitDate;
+    resultTransport.textContent = data.transport;
+    resultDiet.textContent = data.diet;
     resultCredit.textContent = data.fees.credit;
     resultDebit.textContent = data.fees.debit;
     resultDue.textContent = data.fees.debit - data.fees.credit;
@@ -95,7 +106,7 @@ async function fetchStudent() {
     // resultDue.textContent = data.fees.debit - data.fees.credit;
   }
 }
-
+//
 function noticeToDefault() {
   setTimeout(() => {
     notice.style.backgroundColor = "rgba(187, 247, 208, 0.7)";

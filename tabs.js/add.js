@@ -2,7 +2,6 @@
 // MAIN LOGIC
 // MAIN LOGIC
 const toggler = document.getElementById("theme-toggle");
-
 function checkStoredTheme() {
   let darkTheme = localStorage.getItem("darkTheme");
   if (darkTheme === "true") {
@@ -13,7 +12,7 @@ function checkStoredTheme() {
     document.body.classList.remove("dark");
   }
 }
-
+//
 let notice = document.querySelector("#sucess-dialog");
 const admitButton = document.querySelector("#admit-button");
 const cancelButton = document.querySelector("#cancel-button");
@@ -52,14 +51,18 @@ async function getStudentId() {
     addStudentId.textContent = nextStudentId;
     const date = new Date();
     const options = {
-      day: "numeric",
-      month: "numeric",
       year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
     };
+
     const formattedDate = date.toLocaleDateString("en-US", options);
-    const lastTwoDigitsOfYear = formattedDate.slice(-2);
-    const updatedFormattedDate =
-      formattedDate.slice(0, -4) + lastTwoDigitsOfYear;
+    const [month, day, year] = formattedDate
+      .split("/")
+      .map((part) => parseInt(part));
+    const updatedFormattedDate = `${year}/${month
+      .toString()
+      .padStart(2, "0")}/${day.toString().padStart(2, "0")}`;
     addAdmitDate.textContent = updatedFormattedDate;
   } catch (error) {
     console.log(error);
@@ -120,7 +123,6 @@ async function fetchStudent() {
       throw new Error("Network response was not ok");
     }
     settings = await response.json();
-    console.log(settings);
   } catch (error) {
     console.log(error);
   }
@@ -130,7 +132,6 @@ async function fetchStudent() {
       throw new Error("Network response was not ok");
     }
     let data = await response.json();
-    console.log(data);
     if (!data[0].studentId) {
       nextStudentId = 1;
       console.log(nextStudentId);
@@ -139,19 +140,7 @@ async function fetchStudent() {
       console.log(nextStudentId);
     }
     addStudentId.textContent = nextStudentId;
-    const date = new Date();
-    const options = {
-      day: "numeric",
-      month: "numeric",
-      year: "numeric",
-    };
-    const formattedDate = date.toLocaleDateString("en-US", options);
-    const lastTwoDigitsOfYear = formattedDate.slice(-2);
-    const updatedFormattedDate =
-      formattedDate.slice(0, -4) + lastTwoDigitsOfYear;
-    addAdmitDate.textContent = updatedFormattedDate;
-
-    addStudent(nextStudentId, updatedFormattedDate);
+    addStudent(nextStudentId, addAdmitDate.textContent);
   } catch (error) {
     console.log(error);
     notice.innerHTML = "<h4>Failed!</h4><p>Student admission failed</p>";
@@ -168,6 +157,7 @@ async function fetchStudent() {
 async function addStudent(nextStudentId, admitDate) {
   let postURL = "https://cka-backend.onrender.com/students/add";
   let toSetMonthlyFees;
+  console.log(admitDate);
   let toSetTransportFees;
   let toSetDietFees;
   let toSetExamFees = settings[0].exam;
@@ -261,6 +251,7 @@ async function addStudent(nextStudentId, admitDate) {
       setTimeout(() => {
         notice.style.opacity = "0";
       }, 2000);
+      getStudentId();
     })
     .catch((error) => {
       console.error("There was a problem with the add operation:", error);

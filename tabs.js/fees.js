@@ -5,7 +5,6 @@ const toggler = document.getElementById("theme-toggle");
 
 function checkStoredTheme() {
   let darkTheme = localStorage.getItem("darkTheme");
-  console.log(darkTheme);
   if (darkTheme === "true") {
     toggler.checked = true;
     document.body.classList.add("dark");
@@ -163,42 +162,25 @@ async function saveEventHandler(event) {
     console.log("Invalid credit amount ot bill number");
   } else {
     creditButton.removeEventListener("click", saveEventHandler);
+    //
+    //
     // new credit amount logic
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    let totalCreditAmount = 0;
-    fetchedData.creditAmount.forEach((credits) => {});
-    let newCreditAmount = fetchedData.fees.credit + Number(creditAmount.value);
     let newCreditArray = fetchedData.creditAmount;
     newCreditArray.push({
       date: `${formattedDate}`,
-      amount: `${creditAmount.value}`,
+      amount: Number(creditAmount.value),
       bill: `${creditBill.value}`,
+    });
+    let totalCreditAmount = 0;
+    newCreditArray.forEach((credits) => {
+      totalCreditAmount = totalCreditAmount + credits.amount;
     });
     //
     let data = {
       creditAmount: newCreditArray,
       fees: {
         debit: fetchedData.fees.debit,
-        credit: newCreditAmount,
+        credit: totalCreditAmount,
       },
     };
     const patchURL = `https://cka-backend.onrender.com/students/update/${globalStudentId}`;

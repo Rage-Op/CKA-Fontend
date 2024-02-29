@@ -5,7 +5,6 @@ const toggler = document.getElementById("theme-toggle");
 
 function checkStoredTheme() {
   let darkTheme = localStorage.getItem("darkTheme");
-  console.log(darkTheme);
   if (darkTheme === "true") {
     toggler.checked = true;
     document.body.classList.add("dark");
@@ -32,15 +31,13 @@ let addDiet = document.querySelector("#add-diet");
 let addClass = document.querySelector("#add-class");
 let photoUrl = document.querySelector(".photo");
 let nextStudentId;
-
-//
+let settings;
 //
 //
 // To get next student ID.
 getStudentId();
 async function getStudentId() {
   let getURL = "https://cka-backend.onrender.com/students";
-
   try {
     let response = await fetch(getURL);
     if (!response.ok) {
@@ -71,9 +68,6 @@ async function getStudentId() {
 //
 //
 //
-//
-//
-
 admitButton.addEventListener("click", (event) => {
   event.preventDefault();
   if (
@@ -85,11 +79,21 @@ admitButton.addEventListener("click", (event) => {
     addAddress.value === ""
   ) {
     console.log("error");
+    notice.innerHTML = "<h4>Failed!</h4><p>Student admission failed</p>";
+    notice.style.backgroundColor = "rgba(254, 205, 211, 0.7)";
+    notice.style.border = "1px solid #D32F2F";
+    notice.style.opacity = "100";
+    setTimeout(() => {
+      notice.style.opacity = "0";
+      noticeToDefault();
+    }, 2000);
   } else {
     fetchStudent();
   }
 });
-
+//
+//
+//
 cancelButton.addEventListener("click", (event) => {
   event.preventDefault();
   addName.value = "";
@@ -104,10 +108,22 @@ cancelButton.addEventListener("click", (event) => {
   addStudentId.textContent = "...";
   addAdmitDate.textContent = "...";
 });
-
+//
+//
+//
 async function fetchStudent() {
   let getURL = "https://cka-backend.onrender.com/students";
-
+  let getSettingsURL = "https://cka-backend.onrender.com/settings";
+  try {
+    let response = await fetch(getSettingsURL);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    settings = await response.json();
+    console.log(settings);
+  } catch (error) {
+    console.log(error);
+  }
   try {
     let response = await fetch(getURL);
     if (!response.ok) {
@@ -138,16 +154,73 @@ async function fetchStudent() {
     addStudent(nextStudentId, updatedFormattedDate);
   } catch (error) {
     console.log(error);
+    notice.innerHTML = "<h4>Failed!</h4><p>Student admission failed</p>";
+    notice.style.backgroundColor = "rgba(254, 205, 211, 0.7)";
+    notice.style.border = "1px solid #D32F2F";
+    notice.style.opacity = "100";
+    setTimeout(() => {
+      notice.style.opacity = "0";
+      noticeToDefault();
+    }, 2000);
   }
 }
 
 async function addStudent(nextStudentId, admitDate) {
   let postURL = "https://cka-backend.onrender.com/students/add";
-
+  let toSetMonthlyFees;
+  let toSetTransportFees;
+  let toSetDietFees;
+  let toSetExamFees = settings[0].exam;
+  //
+  switch (addClass.value) {
+    case "P.G.":
+      toSetMonthlyFees = settings[0].monthlyPG;
+      break;
+    case "K.G.":
+      toSetMonthlyFees = settings[0].monthlyKG;
+      break;
+    case "nursery":
+      toSetMonthlyFees = settings[0].monthlyNursery;
+      break;
+    case "1":
+      toSetMonthlyFees = settings[0].monthly1;
+      break;
+    case "2":
+      toSetMonthlyFees = settings[0].monthly2;
+      break;
+    case "3":
+      toSetMonthlyFees = settings[0].monthly3;
+      break;
+    case "4":
+      toSetMonthlyFees = settings[0].monthly4;
+      break;
+    case "5":
+      toSetMonthlyFees = settings[0].monthly5;
+      break;
+    case "6":
+      toSetMonthlyFees = settings[0].monthly6;
+      break;
+    default:
+      console.log("Invalid response from select!");
+  }
+  //
+  if (addTransport.checked) {
+    toSetTransportFees = settings[0].transport;
+  } else {
+    toSetTransportFees = 0;
+  }
+  //
+  if (addDiet.checked) {
+    toSetDietFees = settings[0].diet;
+  } else {
+    toSetDietFees = 0;
+  }
+  //
   let jsonData = {
     name: `${addName.value}`,
-    DOB: `${addDOB.value}`,
     class: `${addClass.value}`,
+    studentId: `${nextStudentId}`,
+    DOB: `${addDOB.value}`,
     admitDate: `${admitDate}`,
     fatherName: `${addFname.value}`,
     motherName: `${addMname.value}`,
@@ -155,14 +228,19 @@ async function addStudent(nextStudentId, admitDate) {
     address: `${addAddress.value}`,
     transport: addTransport.checked,
     diet: addDiet.checked,
-    studentId: `${nextStudentId}`,
+    monthlyFees: toSetMonthlyFees,
+    transportFees: toSetTransportFees,
+    dietFees: toSetDietFees,
+    examFees: toSetExamFees,
+    debitAmount: [],
+    creditAmount: [],
     fees: {
-      debit: 1800,
+      debit: 0,
       credit: 0,
     },
     photo: `https://raw.githubusercontent.com/Rage-Op/imageResource/main/${nextStudentId}.jpg`,
   };
-
+  //
   const options = {
     method: "POST",
     headers: {
@@ -170,7 +248,6 @@ async function addStudent(nextStudentId, admitDate) {
     },
     body: JSON.stringify(jsonData),
   };
-
   await fetch(postURL, options)
     .then((response) => {
       if (!response.ok) {
@@ -186,8 +263,8 @@ async function addStudent(nextStudentId, admitDate) {
       }, 2000);
     })
     .catch((error) => {
-      console.error("There was a problem with the post operation:", error);
-      notice.innerHTML = "<h4>Failed!</h4><p>Student deletion failed</p>";
+      console.error("There was a problem with the add operation:", error);
+      notice.innerHTML = "<h4>Failed!</h4><p>Student admission failed</p>";
       notice.style.backgroundColor = "rgba(254, 205, 211, 0.7)";
       notice.style.border = "1px solid #D32F2F";
       notice.style.opacity = "100";

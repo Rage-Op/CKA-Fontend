@@ -5,7 +5,6 @@ const toggler = document.getElementById("theme-toggle");
 
 function checkStoredTheme() {
   let darkTheme = localStorage.getItem("darkTheme");
-  console.log(darkTheme);
   if (darkTheme === "true") {
     toggler.checked = true;
     document.body.classList.add("dark");

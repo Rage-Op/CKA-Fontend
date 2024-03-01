@@ -1177,12 +1177,25 @@ body {
   border: 2px solid var(--dark);
   border-radius: 12px;
   margin: 5px;
-  flex: 1 0 48%;
 }
 
 .print-box .box-top {
   text-align: center;
   padding: 4px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.box-top-left > img {
+  height: 56px;
+  aspect-ratio: 1 / 1;
+}
+
+.box-top-right {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .print-box .box-mid {

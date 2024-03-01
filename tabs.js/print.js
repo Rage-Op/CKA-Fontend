@@ -26,7 +26,21 @@ document.getElementById("printButton").addEventListener("click", function () {
         .print-box .box-bottom {
           text-align: center;
           padding: 5px 10px;
-          line-height: 1.25;
+          line-height: 1.01;
+        }
+        .print-box .box-top {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .box-top-left > img {
+          height: 56px;
+          aspect-ratio: 1 / 1;
+        }
+        .box-top-right {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
         }
         .print-box .box-bottom {
           display: flex;
@@ -68,13 +82,21 @@ async function generateTable(studentBatch) {
     let feesTableRow = document.createElement("tr");
     feesTableRow.innerHTML = `<td>
     <div class="print-box">
-      <div class="box-top">
+    <div class="box-top">
+    <div class="box-top-left">
+      <img src="./../content/logo.jpg" alt="CKA" />
+    </div>
+    <div class="box-top-right">
+      <div class="box-top-text">
         <h4>CHILDREN KINGDOM ACADEMY</h4>
         <p>Siddharthanagar-06, Bhairahawa</p>
         <p>Phone: +977-9847155155, +977-9804415786</p>
-        <hr />
       </div>
-      <div class="box-mid">
+    </div>
+  </div>
+        <div class="box-mid">
+        <hr />
+        <p>Studentt Id: <b>${data[studentBatch].studentId}</b></p>
         <p>
           Dear Parents, your ${pronoun1}
           <b>${data[studentBatch].name}</b> who studies in class
@@ -93,13 +115,21 @@ async function generateTable(studentBatch) {
   </td>
   <td>
     <div class="print-box">
-      <div class="box-top">
+    <div class="box-top">
+    <div class="box-top-left">
+      <img src="./../content/logo.jpg" alt="CKA" />
+    </div>
+    <div class="box-top-right">
+      <div class="box-top-text">
         <h4>CHILDREN KINGDOM ACADEMY</h4>
         <p>Siddharthanagar-06, Bhairahawa</p>
         <p>Phone: +977-9847155155, +977-9804415786</p>
-        <hr />
       </div>
-      <div class="box-mid">
+    </div>
+  </div>
+        <div class="box-mid">
+        <hr />
+        <p>Studentt Id: <b>${data[studentBatch + 1].studentId}</b></p>
         <p>
           Dear Parents, your ${pronoun2}
           <b>${data[studentBatch + 1].class}</b> who studies in class

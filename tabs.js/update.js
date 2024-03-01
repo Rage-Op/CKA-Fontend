@@ -13,6 +13,14 @@ function checkStoredTheme() {
   }
 }
 //
+window.addEventListener("load", () => {
+  if (window.innerWidth < 768) {
+    sideBar.classList.add("close");
+  } else {
+    sideBar.classList.remove("close");
+  }
+});
+//
 let notice = document.querySelector("#sucess-dialog");
 const searchFormButton = document.querySelector("#formsearch button");
 const searchFormInput = document.querySelector("#formsearch input");

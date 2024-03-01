@@ -2,7 +2,6 @@
 // MAIN LOGIC
 // MAIN LOGIC
 const toggler = document.getElementById("theme-toggle");
-
 function checkStoredTheme() {
   let darkTheme = localStorage.getItem("darkTheme");
   if (darkTheme === "true") {
@@ -13,7 +12,15 @@ function checkStoredTheme() {
     document.body.classList.remove("dark");
   }
 }
-
+//
+window.addEventListener("load", () => {
+  if (window.innerWidth < 768) {
+    sideBar.classList.add("close");
+  } else {
+    sideBar.classList.remove("close");
+  }
+});
+//
 let notice = document.querySelector("#sucess-dialog");
 let creditCheckbox = document.querySelector(".credit-sucess-checkbox");
 const searchFormButton = document.querySelector("#formsearch button");

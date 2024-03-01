@@ -13,6 +13,14 @@ function checkStoredTheme() {
   }
 }
 //
+window.addEventListener("load", () => {
+  if (window.innerWidth < 768) {
+    sideBar.classList.add("close");
+  } else {
+    sideBar.classList.remove("close");
+  }
+});
+//
 let notice = document.querySelector("#sucess-dialog");
 const admitButton = document.querySelector("#admit-button");
 const cancelButton = document.querySelector("#cancel-button");

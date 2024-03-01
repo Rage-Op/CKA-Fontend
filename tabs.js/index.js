@@ -2,7 +2,6 @@
 // MAIN LOGIC
 // MAIN LOGIC
 const toggler = document.getElementById("theme-toggle");
-
 function checkStoredTheme() {
   let darkTheme = localStorage.getItem("darkTheme");
   if (darkTheme === "true") {
@@ -13,9 +12,14 @@ function checkStoredTheme() {
     document.body.classList.remove("dark");
   }
 }
-
+//
 window.addEventListener("load", () => {
   fetchData();
+  if (window.innerWidth < 768) {
+    sideBar.classList.add("close");
+  } else {
+    sideBar.classList.remove("close");
+  }
 });
 
 const indexDate = document.querySelector("#index-date");

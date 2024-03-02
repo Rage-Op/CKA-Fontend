@@ -28,6 +28,9 @@ document.getElementById("printButton").addEventListener("click", function () {
           padding: 5px 10px;
           line-height: 1.01;
         }
+        .print-box .box-mid {
+          text-align: justify;
+        }
         .print-box .box-top {
           display: flex;
           justify-content: space-between;

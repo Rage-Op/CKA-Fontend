@@ -13,18 +13,30 @@ debitButton.addEventListener("click", (event) => {
 //
 //
 // previous debit logic
-async function calculateDaysDifference() {
-  const currentDebitDate = new Date();
-  const currentDateString = currentDebitDate
-    .toISOString()
-    .slice(0, 10)
-    .replace(/-/g, "/");
-  const dateBString = await getPreviousDebitDate(); // Example Date B
-  const dateB = new Date(dateBString);
-  const timeDifference = currentDebitDate - dateB;
-  const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+async function getBsDate() {
+  let dateURL = "https://cka-backend.onrender.com/bs-date";
+  let responseDate = await fetch(dateURL);
+  let datetimeStr = await responseDate.json();
+  let datePart = datetimeStr.split(" ")[0];
+  let parts = datePart.split("-");
+  let formattedDate = `${parts[0]}/${parts[1]}/${parts[2]}`;
+  return formattedDate;
+}
 
-  debitDate.textContent = `${daysDifference} days ago`;
+async function calculateDaysDifference() {
+  let dateURL = "https://cka-backend.onrender.com/bs-date";
+  let responseDate = await fetch(dateURL);
+  let datetimeStr = await responseDate.json();
+  let datePart = datetimeStr.split(" ")[0];
+  let parts = datePart.split("-");
+  let formattedDate = `${parts[0]}/${parts[1]}/${parts[2]}`;
+  let dateBString = await getPreviousDebitDate();
+  let [yearA, monthA, dayA] = formattedDate.split("/");
+  let [yearB, monthB, dayB] = dateBString.split("/");
+  let daysA = parseInt(yearA) * 365 + parseInt(monthA) * 30 + parseInt(dayA);
+  let daysB = parseInt(yearB) * 365 + parseInt(monthB) * 30 + parseInt(dayB);
+  let daysPassed = daysA - daysB;
+  debitDate.textContent = `${daysPassed} days ago`;
 }
 
 async function getPreviousDebitDate() {
@@ -46,7 +58,29 @@ calculateDaysDifference();
 //
 async function debitFetchStudent() {
   let URL = "https://cka-backend.onrender.com/students";
-
+  let dateURL = "https://cka-backend.onrender.com/bs-date";
+  let responseDate = await fetch(dateURL);
+  let datetimeStr = await responseDate.json();
+  let datePart = datetimeStr.split(" ")[0];
+  let parts = datePart.split("-");
+  let formattedDate = `${parts[0]}/${parts[1]}/${parts[2]}`;
+  let [year, month, day] = formattedDate.split("/");
+  let bsMonths = [
+    "Baisakh",
+    "Jestha",
+    "Asar",
+    "Shrawan",
+    "Bhadra",
+    "Ashwin",
+    "Kartik",
+    "Mangsir",
+    "Poush",
+    "Magh",
+    "Falgun",
+    "Chaitra",
+  ];
+  let bsMonth = bsMonths[parseInt(month) - 1];
+  let bsFormattedMonthDate = `${day} ${bsMonth} ${year}`;
   try {
     let response = await fetch(`${URL}`);
     if (!response.ok) {
@@ -58,7 +92,7 @@ async function debitFetchStudent() {
     data.forEach((student) => {
       checkbox.checked = false;
       let newDebitAmountArray = student.debitAmount;
-      let newDebitDate = formattedDate;
+      let newDebitDate = bsFormattedMonthDate;
       let newDebitAmount = 0;
       let newDebitRemark;
       if (examCbx.checked) {
@@ -141,6 +175,36 @@ async function debitFetchStudent() {
 //
 async function updateDebit(patchArray) {
   const patchURL = "https://cka-backend.onrender.com/debit";
+  const patchDebitDateURL = "https://cka-backend.onrender.com/debit-log";
+  let dateURL = "https://cka-backend.onrender.com/bs-date";
+  let responseDate = await fetch(dateURL);
+  let datetimeStr = await responseDate.json();
+  let datePart = datetimeStr.split(" ")[0];
+  let parts = datePart.split("-");
+  let formattedDate = `${parts[0]}/${parts[1]}/${parts[2]}`;
+  let renewDebitDate = {
+    lastDebit: formattedDate,
+  };
+  const DebitDateoptions = {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(renewDebitDate),
+  };
+  await fetch(patchDebitDateURL, DebitDateoptions)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Response data:", data);
+    })
+    .catch((error) => {
+      console.error("There was a problem updating debit log:", error);
+    });
   const options = {
     method: "PATCH",
     headers: {

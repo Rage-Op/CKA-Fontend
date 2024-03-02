@@ -24,23 +24,29 @@ window.addEventListener("load", () => {
 
 const indexDate = document.querySelector("#index-date");
 const indexStudents = document.querySelector("#index-students");
-const date = new Date();
-const options = {
-  day: "numeric",
-  month: "numeric",
-  year: "numeric",
-};
-
-const formattedDate = date.toLocaleDateString("en-US", options);
-const lastTwoDigitsOfYear = formattedDate.slice(-2); // Extract last two digits of the year
-const updatedFormattedDate = formattedDate.slice(0, -4) + lastTwoDigitsOfYear; // Replace last 4 digits with last two digits of the year
-indexDate.innerText = updatedFormattedDate;
+const indexDue = document.querySelector("#index-due");
 
 async function fetchData() {
+  // student count
   let response = await fetch("https://cka-backend.onrender.com/students");
   let data = await response.json();
   let studentCount = data.length;
   indexStudents.innerText = studentCount;
+  // date logic
+  let dateURL = "https://cka-backend.onrender.com/bs-date";
+  let responseDate = await fetch(dateURL);
+  let datetimeStr = await responseDate.json();
+  const datePart = datetimeStr.split(" ")[0];
+  const parts = datePart.split("-");
+  const formattedDate = `${parts[0]}/${parts[1]}/${parts[2]}`;
+  indexDate.innerText = formattedDate;
+  // due count
+  let totalDue = 0;
+  data.forEach((student) => {
+    let due = student.fees.debit - student.fees.credit;
+    totalDue = totalDue + due;
+  });
+  indexDue.innerText = `Rs. ${totalDue}`;
 }
 // MAIN LOGIC
 // MAIN LOGIC

@@ -71,26 +71,33 @@ searchFormButton.addEventListener("click", (event) => {
 //
 //
 // get date
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-const currentDate = new Date();
-const day = currentDate.getDate();
-const month = months[currentDate.getMonth()];
-const year = currentDate.getFullYear();
-const formattedDate = `${day} ${month} ${year}`;
-feesDate.textContent = formattedDate;
+async function getBsDate() {
+  let dateURL = "https://cka-backend.onrender.com/bs-date";
+  let responseDate = await fetch(dateURL);
+  let datetimeStr = await responseDate.json();
+  let datePart = datetimeStr.split(" ")[0];
+  let parts = datePart.split("-");
+  let formattedDate = `${parts[0]}/${parts[1]}/${parts[2]}`;
+  let [year, month, day] = formattedDate.split("/");
+  let bsMonths = [
+    "Baisakh",
+    "Jestha",
+    "Asar",
+    "Shrawan",
+    "Bhadra",
+    "Ashwin",
+    "Kartik",
+    "Mangsir",
+    "Poush",
+    "Magh",
+    "Falgun",
+    "Chaitra",
+  ];
+  let bsMonth = bsMonths[parseInt(month) - 1];
+  let bsFormattedDate = `${day} ${bsMonth} ${year}`;
+  feesDate.textContent = bsFormattedDate;
+}
+getBsDate();
 //
 //
 //
@@ -98,63 +105,67 @@ async function fetchStudent() {
   debitColumn.innerHTML = "";
   creditColumn.innerHTML = "";
   let URL = "https://cka-backend.onrender.com/students/search";
-  try {
-    let response = await fetch(`${URL}/${globalStudentId}`);
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
+  if (!globalStudentId) {
+    console.log("no student Id to search for");
+  } else {
+    try {
+      let response = await fetch(`${URL}/${globalStudentId}`);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      let data = await response.json();
+      fetchedData = data;
+      feesName.textContent = data.name;
+      feesStudentId.textContent = data.studentId;
+      feesClass.textContent = data.class;
+      feesCredit.textContent = data.fees.credit;
+      feesDebit.textContent = data.fees.debit;
+      feesDue.textContent = data.fees.debit - data.fees.credit;
+      if (!data.photo) {
+        photoUrl.style.backgroundImage = 'url("./../content/user-icon.jpg")';
+      } else {
+        photoUrl.style.backgroundImage = `url(${data.photo})`;
+      }
+      //
+      //
+      // logic for creating tables from data
+      data.debitAmount.forEach((object) => {
+        let row = document.createElement("tr");
+        let cell = document.createElement("td");
+        cell.innerHTML = `<div class="box">
+        <h5>${object.date}</h5>
+        <p>Nrs. ${object.amount}</p>
+        <p>${object.remark}</p>
+        </div>`;
+        row.appendChild(cell);
+        debitColumn.appendChild(row);
+      });
+      data.creditAmount.forEach((object) => {
+        let row = document.createElement("tr");
+        let cell = document.createElement("td");
+        cell.innerHTML = `<div class="box">
+        <h5>${object.date}</h5>
+        <p>Nrs. ${object.amount}</p>
+        <p>Bill No. ${object.bill}</p>
+        </div>`;
+        row.appendChild(cell);
+        creditColumn.appendChild(row);
+      });
+      creditButton.addEventListener("click", saveEventHandler);
+    } catch (error) {
+      console.log(error);
+      feesName.textContent = "....................";
+      feesClass.textContent = "....................";
+      feesStudentId.textContent = "...";
+      feesDebit.textContent = 0;
+      feesCredit.textContent = 0;
+      feesDue.textContent = 0;
+      debitColumn.innerHTML = "";
+      creditColumn.innerHTML = "";
+      photoUrl.style.backgroundImage =
+        'url("./../content/user-not-found-icon.jpg")';
+      searchFormInput.value = "";
     }
-    let data = await response.json();
-    fetchedData = data;
-    feesName.textContent = data.name;
-    feesStudentId.textContent = data.studentId;
-    feesClass.textContent = data.class;
-    feesCredit.textContent = data.fees.credit;
-    feesDebit.textContent = data.fees.debit;
-    feesDue.textContent = data.fees.debit - data.fees.credit;
-    if (!data.photo) {
-      photoUrl.style.backgroundImage = 'url("./../content/user-icon.jpg")';
-    } else {
-      photoUrl.style.backgroundImage = `url(${data.photo})`;
-    }
-    //
-    //
-    // logic for creating tables from data
-    data.debitAmount.forEach((object) => {
-      let row = document.createElement("tr");
-      let cell = document.createElement("td");
-      cell.innerHTML = `<div class="box">
-      <h5>${object.date}</h5>
-      <p>Nrs. ${object.amount}</p>
-      <p>${object.remark}</p>
-      </div>`;
-      row.appendChild(cell);
-      debitColumn.appendChild(row);
-    });
-    data.creditAmount.forEach((object) => {
-      let row = document.createElement("tr");
-      let cell = document.createElement("td");
-      cell.innerHTML = `<div class="box">
-      <h5>${object.date}</h5>
-      <p>Nrs. ${object.amount}</p>
-      <p>Bill No. ${object.bill}</p>
-      </div>`;
-      row.appendChild(cell);
-      creditColumn.appendChild(row);
-    });
-    creditButton.addEventListener("click", saveEventHandler);
-  } catch (error) {
-    console.log(error);
-    feesName.textContent = "....................";
-    feesClass.textContent = "....................";
-    feesStudentId.textContent = "...";
-    feesDebit.textContent = 0;
-    feesCredit.textContent = 0;
-    feesDue.textContent = 0;
-    debitColumn.innerHTML = "";
-    creditColumn.innerHTML = "";
-    photoUrl.style.backgroundImage =
-      'url("./../content/user-not-found-icon.jpg")';
-    searchFormInput.value = "";
   }
 }
 //
@@ -174,7 +185,7 @@ async function saveEventHandler(event) {
     // new credit amount logic
     let newCreditArray = fetchedData.creditAmount;
     newCreditArray.push({
-      date: `${formattedDate}`,
+      date: `${feesDate.textContent}`,
       amount: Number(creditAmount.value),
       bill: `${creditBill.value}`,
     });

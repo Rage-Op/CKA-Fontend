@@ -59,7 +59,8 @@ searchFormButton.addEventListener("click", (event) => {
 });
 //
 async function fetchStudent() {
-  studentId = searchFormInput.value;
+  // studentId = searchFormInput.value;
+  studentId = Number(searchFormInput.value);
   let URL = "https://cka-backend.onrender.com/students/search";
   try {
     let response = await fetch(`${URL}/${studentId}`);

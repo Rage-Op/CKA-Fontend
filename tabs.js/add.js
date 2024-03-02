@@ -58,21 +58,13 @@ async function getStudentId() {
       nextStudentId = Number(data[0].studentId) + 1;
     }
     addStudentId.textContent = nextStudentId;
-    const date = new Date();
-    const options = {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    };
-
-    const formattedDate = date.toLocaleDateString("en-US", options);
-    const [month, day, year] = formattedDate
-      .split("/")
-      .map((part) => parseInt(part));
-    const updatedFormattedDate = `${year}/${month
-      .toString()
-      .padStart(2, "0")}/${day.toString().padStart(2, "0")}`;
-    addAdmitDate.textContent = updatedFormattedDate;
+    let dateURL = "https://cka-backend.onrender.com/bs-date";
+    let responseDate = await fetch(dateURL);
+    let datetimeStr = await responseDate.json();
+    const datePart = datetimeStr.split(" ")[0];
+    const parts = datePart.split("-");
+    const formattedDate = `${parts[0]}/${parts[1]}/${parts[2]}`;
+    addAdmitDate.textContent = formattedDate;
   } catch (error) {
     console.log(error);
   }
@@ -144,10 +136,8 @@ async function fetchStudent() {
     let data = await response.json();
     if (!data[0].studentId) {
       nextStudentId = 1;
-      console.log(nextStudentId);
     } else {
       nextStudentId = Number(data[0].studentId) + 1;
-      console.log(nextStudentId);
     }
     addStudentId.textContent = nextStudentId;
     addStudent(nextStudentId, addAdmitDate.textContent);
@@ -167,7 +157,6 @@ async function fetchStudent() {
 async function addStudent(nextStudentId, admitDate) {
   let postURL = "https://cka-backend.onrender.com/students/add";
   let toSetMonthlyFees;
-  console.log(admitDate);
   let toSetTransportFees;
   let toSetDietFees;
   let toSetExamFees = settings[0].exam;
@@ -220,7 +209,7 @@ async function addStudent(nextStudentId, admitDate) {
     name: `${addName.value}`,
     gender: `${addGender.value}`,
     class: `${addClass.value}`,
-    studentId: `${nextStudentId}`,
+    studentId: nextStudentId,
     DOB: `${addDOB.value}`,
     admitDate: `${admitDate}`,
     fatherName: `${addFname.value}`,

@@ -19,6 +19,8 @@
 @page {
   size: A4;
   margin: 0;
+  padding: 0;
+  position: relative;
 }
 
 * {
@@ -673,6 +675,42 @@ body {
   width: 100%;
 }
 
+#print-cancel-button {
+  padding: 15px 25px;
+  width: 150px;
+  border: unset;
+  border-radius: 15px;
+  color: var(--danger);
+  z-index: 1;
+  background: var(--light);
+  position: relative;
+  font-weight: 1000;
+  font-size: 17px;
+  -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+  box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+  transition: all 250ms;
+  overflow: hidden;
+}
+
+#print-cancel-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  border-radius: 15px;
+  background-color: var(--light-danger);
+  z-index: -1;
+  -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+  box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+  transition: all 250ms;
+}
+
+#print-cancel-button:hover::before {
+  width: 100%;
+}
+
 .general-form-button-submit {
   padding: 15px 25px;
   border: unset;
@@ -710,7 +748,151 @@ body {
 }
 
 /*  */
-/*  */
+/* Admission form */
+#to-print-form {
+  height: 29.7cm;
+  width: 21cm;
+  position: relative;
+  background-image: url("./content/admission-form.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.admission-form {
+  background-color: transparent;
+  outline: none;
+  border: 1.5px solid grey;
+  height: 0.6cm;
+  padding: 0 1cm;
+  text-align: center;
+}
+#form-date {
+  position: absolute;
+  top: 7.79cm;
+  left: 15.69cm;
+  width: 4.23cm;
+}
+#form-name {
+  position: absolute;
+  top: 10.5cm;
+  left: 4.18cm;
+  width: 15.72cm;
+}
+#form-class {
+  position: absolute;
+  top: 11.44cm;
+  left: 4.17cm;
+  width: 5.64cm;
+}
+#form-DOB {
+  position: absolute;
+  top: 12.34cm;
+  left: 4.17cm;
+  width: 5.64cm;
+}
+#form-student-id {
+  position: absolute;
+  top: 13.24cm;
+  left: 4.17cm;
+  width: 5.64cm;
+}
+#form-gender-male {
+  position: absolute;
+  padding: 0;
+  height: 0.6cm;
+  width: 2.1cm;
+  top: 14.18cm;
+  left: 3.42cm;
+}
+#form-gender-female {
+  position: absolute;
+  padding: 0;
+  height: 0.6cm;
+  width: 2.1cm;
+  top: 14.18cm;
+  left: 5.96cm;
+}
+#form-fname {
+  position: absolute;
+  top: 15.1cm;
+  left: 4.17cm;
+  width: 5.64cm;
+}
+#form-mname {
+  position: absolute;
+  top: 16.02cm;
+  left: 4.17cm;
+  width: 5.64cm;
+}
+#form-nationality {
+  position: absolute;
+  top: 11.44cm;
+  left: 14.28cm;
+  width: 5.64cm;
+}
+#form-zip-code {
+  position: absolute;
+  top: 12.34cm;
+  left: 14.28cm;
+  width: 5.64cm;
+}
+#form-transport {
+  position: absolute;
+  padding: 0;
+  height: 0.6cm;
+  width: 2.1cm;
+  top: 13.26cm;
+  left: 13.54cm;
+}
+#form-diet {
+  position: absolute;
+  padding: 0;
+  height: 0.6cm;
+  width: 2.1cm;
+  top: 13.26cm;
+  left: 18.55cm;
+}
+#form-mobile {
+  position: absolute;
+  top: 14.19cm;
+  left: 14.28cm;
+  width: 5.64cm;
+}
+#form-whatsapp {
+  position: absolute;
+  top: 15.1cm;
+  left: 14.28cm;
+  width: 5.64cm;
+}
+#form-facebook {
+  position: absolute;
+  top: 16.02cm;
+  left: 14.28cm;
+  width: 5.64cm;
+}
+#form-prev-school-name {
+  position: absolute;
+  top: 19cm;
+  left: 4.15cm;
+  width: 10.11cm;
+}
+#form-prev-school-class {
+  position: absolute;
+  top: 19cm;
+  left: 15.69cm;
+  width: 4.19cm;
+}
+#form-address {
+  position: absolute;
+  top: 22.23cm;
+  left: 4.15cm;
+  width: 15.82cm;
+}
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 /*  */
 /*  */
 
@@ -1210,6 +1392,23 @@ body {
   padding: 4px 12px;
 }
 
+.task-title {
+  width: 100%;
+}
+
+#to-do-item {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding-left: 10px;
+  width: 100%;
+}
+
+.autosave-items {
+  color: var(--dark);
+  font-weight: 600;
+}
+
 .content main .insights li:nth-child(1) .bx {
   background: var(--light-primary);
   color: var(--primary);
@@ -1362,6 +1561,7 @@ body {
 
 .content main .bottom-data .reminders .task-list li .task-title {
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 

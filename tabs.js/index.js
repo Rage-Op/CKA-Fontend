@@ -13,18 +13,32 @@ function checkStoredTheme() {
   }
 }
 //
-window.addEventListener("load", () => {
-  fetchData();
-  if (window.innerWidth < 768) {
-    sideBar.classList.add("close");
-  } else {
-    sideBar.classList.remove("close");
-  }
-});
 
 const indexDate = document.querySelector("#index-date");
 const indexStudents = document.querySelector("#index-students");
 const indexDue = document.querySelector("#index-due");
+const listItems = document.querySelectorAll(".autosave-items");
+const itemsCheck = document.querySelectorAll(".task-complete");
+
+itemsCheck.forEach((item) => {
+  item.addEventListener("click", function () {
+    const inputElement = this.parentNode.querySelector(".autosave-items");
+    inputElement.value = "";
+  });
+});
+
+let j = 0;
+listItems.forEach((input) => {
+  input.value = localStorage.getItem(`listValue${j}`);
+  j++;
+});
+setInterval(() => {
+  let i = 0;
+  listItems.forEach((input) => {
+    localStorage.setItem(`listValue${i}`, input.value);
+    i++;
+  });
+}, 1000);
 
 async function fetchData() {
   // student count
@@ -55,6 +69,15 @@ async function fetchData() {
 const sideLinks = document.querySelectorAll(
   ".sidebar .side-menu li a:not(.logout)"
 );
+
+window.addEventListener("load", () => {
+  fetchData();
+  if (window.innerWidth < 768) {
+    sideBar.classList.add("close");
+  } else {
+    sideBar.classList.remove("close");
+  }
+});
 
 sideLinks.forEach((item) => {
   const li = item.parentElement;

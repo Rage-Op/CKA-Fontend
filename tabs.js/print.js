@@ -54,6 +54,162 @@ document.getElementById("printButton").addEventListener("click", function () {
     `,
   });
 });
+// admission form print logic
+document
+  .getElementById("admission-form-print-button")
+  .addEventListener("click", function () {
+    printJS({
+      printable: "to-print-form",
+      type: "html",
+      style: `
+      @media print {
+        .no-print { display: none; }
+        * {
+        padding: 0;
+        margin: 0;
+        }
+        #to-print-form {
+          height: 29.7cm;
+          width: 21cm;
+          position: relative;
+          background-image: url("./../content/admission-form.jpg");
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+        .admission-form {
+          background-color: transparent;
+          outline: none;
+          border: 1.5px solid grey;
+          height: 0.6cm;
+          text-align: center;
+        }
+        #form-date {
+          position: absolute;
+          top: 7.79cm;
+          left: 15.69cm;
+          width: 4.23cm;
+        }
+        #form-name {
+          position: absolute;
+          top: 10.5cm;
+          left: 4.17cm;
+          width: 15.72cm;
+        }
+        #form-class {
+          position: absolute;
+          top: 11.44cm;
+          left: 4.17cm;
+          width: 5.64cm;
+        }
+        #form-DOB {
+          position: absolute;
+          top: 12.34cm;
+          left: 4.17cm;
+          width: 5.64cm;
+        }
+        #form-student-id {
+          position: absolute;
+          top: 13.24cm;
+          left: 4.17cm;
+          width: 5.64cm;
+        }
+        #form-gender-male {
+          position: absolute;
+          padding: 0;
+          height: 0.6cm;
+          width: 2.1cm;
+          top: 14.18cm;
+          left: 3.42cm;
+        }
+        #form-gender-female {
+          position: absolute;
+          padding: 0;
+          height: 0.6cm;
+          width: 2.1cm;
+          top: 14.18cm;
+          left: 5.96cm;
+        }
+        #form-fname {
+          position: absolute;
+          top: 15.1cm;
+          left: 4.17cm;
+          width: 5.64cm;
+        }
+        #form-mname {
+          position: absolute;
+          top: 16.02cm;
+          left: 4.17cm;
+          width: 5.64cm;
+        }
+        #form-nationality {
+          position: absolute;
+          top: 11.44cm;
+          left: 14.28cm;
+          width: 5.64cm;
+        }
+        #form-zip-code {
+          position: absolute;
+          top: 12.34cm;
+          left: 14.28cm;
+          width: 5.64cm;
+        }
+        #form-transport {
+          position: absolute;
+          padding: 0;
+          height: 0.6cm;
+          width: 2.1cm;
+          top: 13.26cm;
+          left: 13.54cm;
+        }
+        #form-diet {
+          position: absolute;
+          padding: 0;
+          height: 0.6cm;
+          width: 2.1cm;
+          top: 13.26cm;
+          left: 18.55cm;
+        }
+        #form-mobile {
+          position: absolute;
+          top: 14.19cm;
+          left: 14.28cm;
+          width: 5.64cm;
+        }
+        #form-whatsapp {
+          position: absolute;
+          top: 15.1cm;
+          left: 14.28cm;
+          width: 5.64cm;
+        }
+        #form-facebook {
+          position: absolute;
+          top: 16.02cm;
+          left: 14.28cm;
+          width: 5.64cm;
+        }
+        #form-prev-school-name {
+          position: absolute;
+          top: 19cm;
+          left: 4.15cm;
+          width: 10.11cm;
+        }
+        #form-prev-school-class {
+          position: absolute;
+          top: 19cm;
+          left: 15.69cm;
+          width: 4.19cm;
+        }
+        #form-address {
+          position: absolute;
+          top: 22.23cm;
+          left: 4.15cm;
+          width: 15.82cm;
+        }
+      }
+    `,
+    });
+  });
 //
 //
 //main Logic
@@ -96,7 +252,7 @@ function updateStudentId(countBatch) {
     if (countBatch2 > globalData.length) {
       countBatch2 = globalData.length;
     }
-    printStudentId.textContent = `${countBatch} - ${countBatch2}`;
+    printStudentId.textContent = `${countBatch + 1} - ${countBatch2}`;
   }
 }
 
@@ -155,7 +311,7 @@ async function generateTable(studentBatch) {
         </div>
               <div class="box-mid">
               <hr />
-              <p>Student Id: <b>${data[i].studentId}</b></p>
+              <p style="text-align: center">Student Id: <b>${data[i].studentId}</b></p>
               <p>
                 Dear Parents, your ${pronoun1}
                 <b>${data[i].name}</b> who studies in class
@@ -186,7 +342,7 @@ async function generateTable(studentBatch) {
         </div>
               <div class="box-mid">
               <hr />
-              <p>Student Id: <b>undefined</b></p>
+              <p style="text-align: center">Student Id: <b>undefined</b></p>
               <p>
                 Dear Parents, your 
                 <b>undefined</b> who studies in class
@@ -234,7 +390,9 @@ async function generateTable(studentBatch) {
         </div>
               <div class="box-mid">
               <hr />
-              <p>Student Id: <b>${data[i].studentId}</b></p>
+              <p style="text-align: center">Student Id: <b>${
+                data[i].studentId
+              }</b></p>
               <p>
                 Dear Parents, your ${pronoun1}
                 <b>${data[i].name}</b> who studies in class
@@ -265,7 +423,9 @@ async function generateTable(studentBatch) {
         </div>
               <div class="box-mid">
               <hr />
-              <p>Student Id: <b>${data[i + 1].studentId}</b></p>
+              <p style="text-align: center">Student Id: <b>${
+                data[i + 1].studentId
+              }</b></p>
               <p>
                 Dear Parents, your ${pronoun2}
                 <b>${data[i + 1].name}</b> who studies in class
@@ -283,6 +443,110 @@ async function generateTable(studentBatch) {
       feesTableBody.appendChild(feesTableRow);
     }
   }
+}
+// admission form
+let notice = document.querySelector("#sucess-dialog");
+const searchFormButton = document.querySelector("#formsearch button");
+const searchFormInput = document.querySelector("#formsearch input");
+const formDate = document.querySelector("#form-date");
+const formName = document.querySelector("#form-name");
+const formClass = document.querySelector("#form-class");
+const formDOB = document.querySelector("#form-DOB");
+const formStudentId = document.querySelector("#form-student-id");
+const formGenderMale = document.querySelector("#form-gender-male");
+const formGenderFemale = document.querySelector("#form-gender-female");
+const formFname = document.querySelector("#form-fname");
+const forMname = document.querySelector("#form-mname");
+const formNationality = document.querySelector("#form-nationality");
+const formZipCode = document.querySelector("#form-zip-code");
+const formTransport = document.querySelector("#form-transport");
+const formDiet = document.querySelector("#form-diet");
+const formMobile = document.querySelector("#form-mobile");
+const formWhatsapp = document.querySelector("#form-whatsapp");
+const formFacebook = document.querySelector("#form-facebook");
+const formPrevSchoolName = document.querySelector("#form-prev-shool-name");
+const formPrevSchoolClass = document.querySelector("#form-prev-shool-class");
+const formAddress = document.querySelector("#form-address");
+
+searchFormButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  if (searchFormInput.value == "") {
+    notice.innerHTML = "<h4>Failed!</h4><p>Student not found</p>";
+    notice.style.backgroundColor = "rgba(254, 205, 211, 0.7)";
+    notice.style.border = "1px solid #D32F2F";
+    notice.style.opacity = "100";
+    setTimeout(() => {
+      notice.style.opacity = "0";
+      noticeToDefault();
+    }, 2000);
+  } else {
+    fetchData(searchFormInput.value);
+  }
+});
+
+async function fetchData(search) {
+  //
+  studentId = Number(searchFormInput.value);
+  let URL = "https://cka-backend.onrender.com/students/search";
+  try {
+    let response = await fetch(`${URL}/${studentId}`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    let data = await response.json();
+    searchFormInput.value = "";
+    console.log(data);
+    formDate.value = data.admitDate;
+    formName.value = data.name;
+    formClass.value = data.class;
+    formDOB.value = data.DOB;
+    formStudentId.value = data.studentId;
+    if (data.gender == "male") {
+      formGenderMale.checked = true;
+      formGenderFemale.checked = false;
+    } else {
+      formGenderMale.checked = false;
+      formGenderFemale.checked = true;
+    }
+    formFname.value = data.fname;
+    forMname.value = data.mname;
+    formNationality.value = "";
+    formZipCode.value = "";
+    if (data.transport == true) {
+      formTransport.checked = true;
+    } else {
+      formTransport.checked = false;
+    }
+    if (data.diet == true) {
+      formDiet.checked = true;
+    } else {
+      formDiet.checked = false;
+    }
+    formMobile.value = data.contact;
+    formWhatsapp.value = "";
+    formFacebook.value = "";
+    notice.style.opacity = "100";
+    setTimeout(() => {
+      notice.style.opacity = "0";
+    }, 2000);
+  } catch (error) {
+    console.log(error);
+    notice.innerHTML = "<h4>Failed!</h4><p>Student not found</p>";
+    notice.style.backgroundColor = "rgba(254, 205, 211, 0.7)";
+    notice.style.border = "1px solid #D32F2F";
+    notice.style.opacity = "100";
+    setTimeout(() => {
+      notice.style.opacity = "0";
+      noticeToDefault();
+    }, 2000);
+  }
+}
+function noticeToDefault() {
+  setTimeout(() => {
+    notice.style.backgroundColor = "rgba(187, 247, 208, 0.7)";
+    notice.style.border = "1px solid #50c156";
+    notice.innerHTML = "<h4>Sucess!</h4><p>Student found</p>";
+  }, 300);
 }
 //main Logic
 //

@@ -122,7 +122,7 @@
           <div class="orders">
             <div class="header">
               <i class="bx bx-receipt"></i>
-              <h3>Recently Admitted</h3>
+              <h3>Action Required</h3>
               <i class="bx bx-filter"></i>
               <i class="bx bx-search"></i>
             </div>
@@ -169,33 +169,50 @@
               <i class="bx bx-note"></i>
               <h3>Remiders</h3>
               <i class="bx bx-filter"></i>
-              <i class="bx bx-plus"></i>
+              <i class="bx bx-plus" d="add-to-do"></i>
             </div>
             <ul class="task-list">
               <li class="completed">
                 <div class="task-title">
-                  <i class="bx bx-check-circle"></i>
-                  <p>Start Our Meeting</p>
+                  <i class="bx bx-check-circle task-complete"></i>
+                  <input
+                    placeholder="Add a reminder here..."
+                    autocomplete="off"
+                    type="text"
+                    id="to-do-item"
+                    class="autosave-items"
+                  />
                 </div>
                 <i class="bx bx-dots-vertical-rounded"></i>
               </li>
               <li class="completed">
                 <div class="task-title">
-                  <i class="bx bx-check-circle"></i>
-                  <p>Analyse Our Site</p>
+                  <i class="bx bx-check-circle task-complete"></i>
+                  <input
+                    placeholder="Tap on the check to clear reminder..."
+                    autocomplete="off"
+                    type="text"
+                    id="to-do-item"
+                    class="autosave-items"
+                  />
                 </div>
                 <i class="bx bx-dots-vertical-rounded"></i>
               </li>
-              <li class="not-completed">
+              <li class="completed">
                 <div class="task-title">
-                  <i class="bx bx-x-circle"></i>
-                  <p>Play Footbal</p>
+                  <i class="bx bx-check-circle task-complete"></i>
+                  <input
+                    placeholder="Reminders are stored locally..."
+                    autocomplete="off"
+                    type="text"
+                    id="to-do-item"
+                    class="autosave-items"
+                  />
                 </div>
                 <i class="bx bx-dots-vertical-rounded"></i>
               </li>
             </ul>
           </div>
-
           <!-- End of Reminders-->
         </div>
       </main>

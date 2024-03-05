@@ -324,6 +324,7 @@ body {
   background-color: transparent;
   border-radius: 20px;
   width: 100%;
+  color: var(--dark);
 }
 
 .inputGroup label {

@@ -100,14 +100,34 @@ async function fetchStudent() {
     resultDue.textContent = data.fees.debit - data.fees.credit;
     idToBeDeleted = data.studentId;
     searchFormInput.value = "";
-    deleteButton.addEventListener("click", deleteEventHandler);
+    deleteButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      const userInput = window.prompt("Please enter your password:");
+      if (userInput !== null) {
+        const password = userInput.trim();
+        if (password === "admin123") {
+          console.log("deleting student");
+          deleteEventHandler();
+        }
+      } else {
+        console.log("delete request dismissed");
+      }
+    });
     if (!data.photo) {
-      photoUrl.style.backgroundImage = 'url("./content/user-icon.jpg")';
+      photoUrl.style.backgroundImage = 'url("./../content/user-icon.jpg")';
     } else {
       photoUrl.style.backgroundImage = `url(${data.photo})`;
     }
   } catch (error) {
     console.log(error);
+    notice.innerHTML = "<h4>Failed!</h4><p>Student not found</p>";
+    notice.style.backgroundColor = "rgba(254, 205, 211, 0.7)";
+    notice.style.border = "1px solid #D32F2F";
+    notice.style.opacity = "100";
+    setTimeout(() => {
+      notice.style.opacity = "0";
+      noticeToDefault();
+    }, 2000);
     resultName.textContent = "....................";
     resultDOB.textContent = "....................";
     resultFname.textContent = "....................";
@@ -122,13 +142,26 @@ async function fetchStudent() {
     resultStudentId.textContent = "....................";
     resultCredit.textContent = 0;
     resultDebit.textContent = 0;
-    photoUrl.style.backgroundImage = 'url("./content/user-icon.jpg")';
+    photoUrl.style.backgroundImage =
+      'url("./../content/user-not-found-icon.jpg")';
     searchFormInput.value = "";
     resultDue.textContent = 0;
   }
 }
 async function deleteEventHandler() {
-  deleteButton.removeEventListener("click", deleteEventHandler);
+  deleteButton.removeEventListener("click", (event) => {
+    event.preventDefault();
+    const userInput = window.prompt("Please enter your password:");
+    if (userInput !== null) {
+      const password = userInput.trim();
+      if (password === "admin123") {
+        console.log("deleting student");
+        deleteEventHandler();
+      }
+    } else {
+      console.log("delete request dismissed");
+    }
+  });
   console.log(studentId);
   const deleteURL = `https://cka-backend.onrender.com/students/delete/${studentId}`;
   const options = {
@@ -150,13 +183,13 @@ async function deleteEventHandler() {
     })
     .catch((error) => {
       console.error("There was a problem with the delete operation:", error);
-      notice.innerHTML = "<h4>Failed!</h4><p>Delete failed</p>";
+      notice.innerHTML = "<h4>Failed!</h4><p>Delete Failed</p>";
       notice.style.backgroundColor = "rgba(254, 205, 211, 0.7)";
       notice.style.border = "1px solid #D32F2F";
       notice.style.opacity = "100";
       setTimeout(() => {
         notice.style.opacity = "0";
-        notice.innerHTML = "<h4>Sucess!</h4><p>Student deleted</p>";
+        noticeToDefault();
       }, 2000);
     });
   resultName.textContent = "....................";
@@ -173,9 +206,16 @@ async function deleteEventHandler() {
   resultStudentId.textContent = "....................";
   resultCredit.textContent = 0;
   resultDebit.textContent = 0;
-  photoUrl.style.backgroundImage = 'url("./content/user-icon.jpg")';
+  photoUrl.style.backgroundImage = 'url("./../content/user-icon.jpg")';
   searchFormInput.value = "";
   resultDue.textContent = 0;
+}
+function noticeToDefault() {
+  setTimeout(() => {
+    notice.style.backgroundColor = "rgba(187, 247, 208, 0.7)";
+    notice.style.border = "1px solid #50c156";
+    notice.innerHTML = "<h4>Sucess!</h4><p>Student found</p>";
+  }, 300);
 }
 // MAIN LOGIC
 // MAIN LOGIC

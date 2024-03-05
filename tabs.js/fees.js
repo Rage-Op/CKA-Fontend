@@ -66,6 +66,7 @@ searchFormButton.addEventListener("click", (event) => {
     creditColumn.innerHTML = "";
     debitColumn.innerHTML = "";
     fetchStudent();
+    searchFormInput.value = "";
   }
 });
 //
@@ -151,7 +152,22 @@ async function fetchStudent() {
         row.appendChild(cell);
         creditColumn.appendChild(row);
       });
-      creditButton.addEventListener("click", saveEventHandler);
+      creditButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        const userInput = window.prompt("Please enter your password:");
+        if (userInput !== null) {
+          const password = userInput.trim();
+          if (password === "admin123") {
+            console.log("processing credit");
+            saveEventHandler();
+          } else {
+            prompt("Invalid password!");
+          }
+        } else {
+          console.log("Credit dismissed.");
+          prompt("Credit cancelled by user.");
+        }
+      });
     } catch (error) {
       console.log(error);
       feesName.textContent = "....................";
@@ -171,8 +187,7 @@ async function fetchStudent() {
 //
 //
 //
-async function saveEventHandler(event) {
-  event.preventDefault();
+async function saveEventHandler() {
   document.querySelector("#credit-chx").style.backgroundColor = "";
   if (creditAmount.value == "" || creditBill.value == "") {
     console.log("credit amount or bill number not defined");

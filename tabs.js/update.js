@@ -30,6 +30,8 @@ let updateFname = document.querySelector("#update-fname");
 let updateMname = document.querySelector("#update-mname");
 let updateContact = document.querySelector("#update-contact");
 let updateAddress = document.querySelector("#update-address");
+let updateOldDue = document.querySelector("#update-old-due");
+let updateDiscount = document.querySelector("#update-discount");
 let updateTransport = document.querySelector("#update-transport");
 let updateDiet = document.querySelector("#update-diet");
 let updateClass = document.querySelector("#add-class");
@@ -38,6 +40,7 @@ let updateStudentId = document.querySelector("#add-studentId");
 let updateAdmitDate = document.querySelector("#add-admitdate");
 let saveButton = document.querySelector("#admit-button");
 let cancelButton = document.querySelector("#cancel-button");
+let globalData;
 //
 cancelButton.addEventListener("click", (event) => {
   event.preventDefault();
@@ -48,6 +51,8 @@ cancelButton.addEventListener("click", (event) => {
   updateMname.value = "";
   updateContact.value = "";
   updateAddress.value = "";
+  updateOldDue.value = "";
+  updateDiscount.value = "";
   updateTransport.checked = false;
   updateDiet.checked = false;
   updateClass.value = "P.G.";
@@ -80,12 +85,17 @@ async function fetchStudent() {
       throw new Error("Network response was not ok");
     }
     let data = await response.json();
+    globalData = data;
     updateName.value = data.name;
     updateDOB.value = data.DOB;
     updateFname.value = data.fatherName;
     updateMname.value = data.motherName;
     updateContact.value = data.contact;
     updateAddress.value = data.address;
+    console.log(data.debitAmount[0].remark);
+    console.log(data.creditAmount[0].bill);
+    updateOldDue.value = data.debitAmount[0].amount;
+    updateDiscount.value = data.creditAmount[0].amount;
     updateStudentId.textContent = data.studentId;
     updateAdmitDate.textContent = data.admitDate;
     updateTransport.checked = data.transport;
@@ -106,6 +116,8 @@ async function fetchStudent() {
     updateMname.value = "";
     updateContact.value = "";
     updateAddress.value = "";
+    updateOldDue.value = "";
+    updateDiscount.value = "";
     updateTransport.checked = false;
     updateDiet.checked = false;
     updateClass.value = "P.G.";
@@ -116,6 +128,19 @@ async function fetchStudent() {
 }
 async function saveEventHandler(event) {
   event.preventDefault();
+  let newFeesDebit =
+    globalData.fees.debit -
+    globalData.debitAmount[0].amount +
+    Number(updateOldDue.value);
+  let newDebitAmount = globalData.debitAmount;
+  newDebitAmount[0].amount = Number(updateOldDue.value);
+  //
+  let newFeesCredit =
+    globalData.fees.credit -
+    globalData.creditAmount[0].amount +
+    Number(updateDiscount.value);
+  let newCreditAmount = globalData.creditAmount;
+  newCreditAmount[0].amount = Number(updateDiscount.value);
   saveButton.removeEventListener("click", saveEventHandler);
   console.log(studentId);
   let data = {
@@ -126,6 +151,12 @@ async function saveEventHandler(event) {
     motherName: `${updateMname.value}`,
     contact: `${updateContact.value}`,
     address: `${updateAddress.value}`,
+    debitAmount: newDebitAmount,
+    creditAmount: newCreditAmount,
+    fees: {
+      debit: newFeesDebit,
+      credit: newFeesCredit,
+    },
     transport: updateTransport.checked,
     diet: updateDiet.checked,
   };
@@ -168,6 +199,8 @@ async function saveEventHandler(event) {
   updateMname.value = "";
   updateContact.value = "";
   updateAddress.value = "";
+  updateOldDue.value = "";
+  updateDiscount.value = "";
   updateTransport.checked = false;
   updateDiet.checked = false;
   updateClass.value = "P.G.";

@@ -104,12 +104,12 @@ async function fetchStudent() {
       notice.style.opacity = "0";
       noticeToDefault();
     }, 2000);
-    resultName.textContent = "..........";
-    resultDOB.textContent = "..........";
-    resultFname.textContent = "..........";
-    resultMname.textContent = "..........";
-    resultContact.textContent = "..........";
-    resultAddress.textContent = "..........";
+    resultName.textContent = "....................";
+    resultDOB.textContent = "....................";
+    resultFname.textContent = "....................";
+    resultMname.textContent = "....................";
+    resultContact.textContent = "....................";
+    resultAddress.textContent = "....................";
     resultTransport.textContent = "....................";
     resultDiet.textContent = "....................";
     resultGender.textContent = "....................";

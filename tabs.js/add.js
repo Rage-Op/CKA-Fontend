@@ -52,7 +52,7 @@ async function getStudentId() {
       throw new Error("Network response was not ok");
     }
     let data = await response.json();
-    if (!data[0].studentId) {
+    if (data.length === 0) {
       nextStudentId = 1;
     } else {
       nextStudentId = Number(data[0].studentId) + 1;
@@ -134,7 +134,7 @@ async function fetchStudent() {
       throw new Error("Network response was not ok");
     }
     let data = await response.json();
-    if (!data[0].studentId) {
+    if (data.length === 0) {
       nextStudentId = 1;
     } else {
       nextStudentId = Number(data[0].studentId) + 1;
@@ -193,17 +193,9 @@ async function addStudent(nextStudentId, admitDate) {
       console.log("Invalid response from select!");
   }
   //
-  if (addTransport.checked) {
-    toSetTransportFees = settings[0].transport;
-  } else {
-    toSetTransportFees = 0;
-  }
+  toSetTransportFees = settings[0].transport;
   //
-  if (addDiet.checked) {
-    toSetDietFees = settings[0].diet;
-  } else {
-    toSetDietFees = 0;
-  }
+  toSetDietFees = settings[0].diet;
   //
   let jsonData = {
     name: `${addName.value}`,
@@ -222,8 +214,20 @@ async function addStudent(nextStudentId, admitDate) {
     transportFees: toSetTransportFees,
     dietFees: toSetDietFees,
     examFees: toSetExamFees,
-    debitAmount: [],
-    creditAmount: [],
+    debitAmount: [
+      {
+        date: "previous year",
+        amount: 0,
+        remark: "OLD DUE!",
+      },
+    ],
+    creditAmount: [
+      {
+        date: "starting year",
+        amount: 0,
+        bill: "DISCOUNT!",
+      },
+    ],
     fees: {
       debit: 0,
       credit: 0,

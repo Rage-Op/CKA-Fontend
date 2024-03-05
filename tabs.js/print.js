@@ -299,7 +299,7 @@ async function generateTable(studentBatch) {
           <div class="print-box">
           <div class="box-top">
           <div class="box-top-left">
-            <img src="./../content/logo.jpg" alt="CKA" />
+            <img src="./../content/logo.png" alt="CKA" />
           </div>
           <div class="box-top-right">
             <div class="box-top-text">
@@ -330,7 +330,7 @@ async function generateTable(studentBatch) {
           <div class="print-box">
           <div class="box-top">
           <div class="box-top-left">
-            <img src="./../content/logo.jpg" alt="CKA" />
+            <img src="./../content/logo.png" alt="CKA" />
           </div>
           <div class="box-top-right">
             <div class="box-top-text">
@@ -378,7 +378,7 @@ async function generateTable(studentBatch) {
           <div class="print-box">
           <div class="box-top">
           <div class="box-top-left">
-            <img src="./../content/logo.jpg" alt="CKA" />
+            <img src="./../content/logo.png" alt="CKA" />
           </div>
           <div class="box-top-right">
             <div class="box-top-text">
@@ -411,7 +411,7 @@ async function generateTable(studentBatch) {
           <div class="print-box">
           <div class="box-top">
           <div class="box-top-left">
-            <img src="./../content/logo.jpg" alt="CKA" />
+            <img src="./../content/logo.png" alt="CKA" />
           </div>
           <div class="box-top-right">
             <div class="box-top-text">

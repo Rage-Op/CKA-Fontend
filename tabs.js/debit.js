@@ -8,7 +8,19 @@ let examCbx = document.querySelector("#exam-checkbox");
 
 debitButton.addEventListener("click", (event) => {
   event.preventDefault();
-  debitFetchStudent();
+  const userInput = window.prompt("Please enter your password:");
+  if (userInput !== null) {
+    const password = userInput.trim();
+    if (password === "admin123") {
+      console.log("processing debit");
+      debitFetchStudent();
+    } else {
+      window.prompt("Invalid password!");
+    }
+  } else {
+    console.log("debit dismissed.");
+    prompt("Debit cancelled by user.");
+  }
 });
 //
 //
@@ -201,6 +213,7 @@ async function updateDebit(patchArray) {
     })
     .then((data) => {
       console.log("Response data:", data);
+      examCbx.checked = false;
     })
     .catch((error) => {
       console.error("There was a problem updating debit log:", error);

@@ -179,8 +179,29 @@
                       <label for="name">Address</label>
                     </div>
                   </div>
-                  <div class="add-right">
-                    <div class="transport">
+                  <div
+                    class="add-right"
+                    style="justify-content: space-between; gap: 0px"
+                  >
+                    <div class="inputGroup" style="margin-top: 10px">
+                      <input
+                        type="text"
+                        id="update-old-due"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">Old Due</label>
+                    </div>
+                    <div class="inputGroup" style="margin: 10px 0">
+                      <input
+                        type="text"
+                        id="update-discount"
+                        required=""
+                        autocomplete="off"
+                      />
+                      <label for="name">Discount</label>
+                    </div>
+                    <div class="transport" style="height: 25px">
                       <label for="add-transport">Transport:</label>
                       <input
                         type="checkbox"
@@ -188,7 +209,7 @@
                         class="ui-checkbox"
                       />
                     </div>
-                    <div class="diet">
+                    <div class="diet" style="height: 25px">
                       <label for="add-diet">Diet:</label>
                       <input
                         type="checkbox"
@@ -196,7 +217,7 @@
                         class="ui-checkbox"
                       />
                     </div>
-                    <div class="class">
+                    <div class="class" style="height: 25px">
                       <label for="add-class">Class:</label>
                       <select name="class" id="add-class">
                         <option value="P.G.">P.G.</option>
